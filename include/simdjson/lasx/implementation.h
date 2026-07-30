@@ -15,7 +15,7 @@ namespace lasx {
  */
 class implementation final : public simdjson::implementation {
 public:
-  simdjson_inline implementation() : simdjson::implementation("lasx", "LoongArch ASX", internal::instruction_set::LASX) {}
+  simdjson_inline implementation() : simdjson::implementation("lasx", "LoongArch ASX", internal::instruction_set::LASX) { __builtin_trap() /* STUB: not implemented */; }
   simdjson_warn_unused error_code create_dom_parser_implementation(
     size_t capacity,
     size_t max_length,

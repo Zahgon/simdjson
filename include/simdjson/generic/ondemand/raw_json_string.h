@@ -138,12 +138,12 @@ private:
    * This will set the inner pointer to zero, effectively making
    * this instance unusable.
    */
-  simdjson_inline void consume() noexcept { buf = nullptr; }
+  simdjson_inline void consume() noexcept { __builtin_trap() /* STUB: not implemented */; }
 
   /**
    * Checks whether the inner pointer is non-null and thus usable.
    */
-  simdjson_inline simdjson_warn_unused bool alive() const noexcept { return buf != nullptr; }
+  simdjson_inline simdjson_warn_unused bool alive() const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
   /**
    * Unescape this JSON string, replacing \\ with \, \n with newline, etc.

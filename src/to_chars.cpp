@@ -41,84 +41,26 @@ struct uint128 {
   std::uint64_t low;
 };
 
-inline std::uint64_t rotr64(std::uint64_t n, unsigned r) noexcept {
-  r &= 63;
-  return (n >> r) | (n << ((64 - r) & 63));
-}
+inline std::uint64_t rotr64(std::uint64_t n, unsigned r) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-inline std::uint64_t umul64(std::uint32_t x, std::uint32_t y) noexcept {
-  return x * std::uint64_t(y);
-}
+inline std::uint64_t umul64(std::uint32_t x, std::uint32_t y) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 // 64x64 -> 128 bit multiplication.
-inline uint128 umul128(std::uint64_t x, std::uint64_t y) noexcept {
-#if defined(__SIZEOF_INT128__)
-  const __uint128_t p = static_cast<__uint128_t>(x)*y;
-  return {std::uint64_t(p>>64), std::uint64_t(p)};
-#else // using fallback on 32-bit targets and MSVC
-  const std::uint32_t a = std::uint32_t(x >> 32);
-  const std::uint32_t b = std::uint32_t(x);
-  const std::uint32_t c = std::uint32_t(y >> 32);
-  const std::uint32_t d = std::uint32_t(y);
-
-  const std::uint64_t ac = umul64(a, c);
-  const std::uint64_t bc = umul64(b, c);
-  const std::uint64_t ad = umul64(a, d);
-  const std::uint64_t bd = umul64(b, d);
-
-  const std::uint64_t intermediate =
-      (bd >> 32) + std::uint32_t(ad) + std::uint32_t(bc);
-
-  return {ac + (intermediate >> 32) + (ad >> 32) + (bc >> 32),
-          (intermediate << 32) + std::uint32_t(bd)};
-#endif
-}
+inline uint128 umul128(std::uint64_t x, std::uint64_t y) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 // High 64 bits of a 64x64 -> 128 bit multiplication.
-inline std::uint64_t umul128_upper64(std::uint64_t x, std::uint64_t y) noexcept {
-#if defined(__SIZEOF_INT128__)
-  return std::uint64_t((static_cast<__uint128_t>(x)*y)>>64);
-#else // using fallback on 32-bit targets and MSVC
-  const std::uint32_t a = std::uint32_t(x >> 32);
-  const std::uint32_t b = std::uint32_t(x);
-  const std::uint32_t c = std::uint32_t(y >> 32);
-  const std::uint32_t d = std::uint32_t(y);
-
-  const std::uint64_t ac = umul64(a, c);
-  const std::uint64_t bc = umul64(b, c);
-  const std::uint64_t ad = umul64(a, d);
-  const std::uint64_t bd = umul64(b, d);
-
-  const std::uint64_t intermediate =
-      (bd >> 32) + std::uint32_t(ad) + std::uint32_t(bc);
-
-  return ac + (intermediate >> 32) + (ad >> 32) + (bc >> 32);
-#endif
-}
+inline std::uint64_t umul128_upper64(std::uint64_t x, std::uint64_t y) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 // Upper 128 bits of a 64 x 128 -> 192 bit multiplication.
-inline uint128 umul192_upper128(std::uint64_t x, uint128 y) noexcept {
-  uint128 r = umul128(x, y.high);
-  const std::uint64_t add = umul128_upper64(x, y.low);
-  const std::uint64_t sum = r.low + add;
-  r.high += (sum < r.low) ? 1 : 0;
-  r.low = sum;
-  return r;
-}
+inline uint128 umul192_upper128(std::uint64_t x, uint128 y) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 // Lower 128 bits of a 64 x 128 -> 192 bit multiplication.
-inline uint128 umul192_lower128(std::uint64_t x, uint128 y) noexcept {
-  const std::uint64_t high = x * y.high;
-  const uint128 high_low = umul128(x, y.low);
-  return {high + high_low.high, high_low.low};
-}
+inline uint128 umul192_lower128(std::uint64_t x, uint128 y) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 // Integer log approximations (exact over the range of inputs we feed them).
-inline int floor_log10_pow2(int e) noexcept { return (e * 315653) >> 20; }
-inline int floor_log2_pow10(int e) noexcept { return (e * 1741647) >> 19; }
-inline int floor_log10_pow2_minus_log10_4_over_3(int e) noexcept {
-  return (e * 631305 - 261663) >> 21;
-}
+inline int floor_log10_pow2(int e) noexcept { __builtin_trap() /* STUB: not implemented */; }
+inline int floor_log2_pow10(int e) noexcept { __builtin_trap() /* STUB: not implemented */; }
+inline int floor_log10_pow2_minus_log10_4_over_3(int e) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 // Format constants for IEEE-754 binary64, plus the precomputed cache of powers of ten.
 static constexpr int kappa = 2;
@@ -768,85 +710,35 @@ struct compute_mul_parity_result {
   bool is_integer;
 };
 
-inline compute_mul_result compute_mul(std::uint64_t u, uint128 c) noexcept {
-  const uint128 r = umul192_upper128(u, c);
-  return {r.high, r.low == 0};
-}
+inline compute_mul_result compute_mul(std::uint64_t u, uint128 c) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-inline std::uint64_t compute_delta(uint128 c, int beta) noexcept {
-  return c.high >> (total_bits - 1 - beta);
-}
+inline std::uint64_t compute_delta(uint128 c, int beta) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 inline compute_mul_parity_result compute_mul_parity(std::uint64_t two_f,
-                                                    uint128 c, int beta) noexcept {
-  // beta is always in [1, 63] here.
-  const uint128 r = umul192_lower128(two_f, c);
-  return {((r.high >> (64 - beta)) & 1) != 0,
-          ((r.high << beta) | (r.low >> (64 - beta))) == 0};
-}
+                                                    uint128 c, int beta) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 inline std::uint64_t
-compute_left_endpoint_for_shorter_interval_case(uint128 c, int beta) noexcept {
-  return (c.high - (c.high >> (significand_bits + 2))) >>
-         (total_bits - significand_bits - 1 - beta);
-}
+compute_left_endpoint_for_shorter_interval_case(uint128 c, int beta) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 inline std::uint64_t
-compute_right_endpoint_for_shorter_interval_case(uint128 c, int beta) noexcept {
-  return (c.high + (c.high >> (significand_bits + 1))) >>
-         (total_bits - significand_bits - 1 - beta);
-}
+compute_right_endpoint_for_shorter_interval_case(uint128 c, int beta) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 inline std::uint64_t
-compute_round_up_for_shorter_interval_case(uint128 c, int beta) noexcept {
-  return ((c.high >> (total_bits - significand_bits - 2 - beta)) + 1) / 2;
-}
+compute_round_up_for_shorter_interval_case(uint128 c, int beta) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 // floor(n / 10) for the shorter-interval right endpoint (n bounded so the
 // single multiply below is exact).
-inline std::uint64_t divide_by_pow10_1(std::uint64_t n) noexcept {
-  return umul128_upper64(n, std::uint64_t(1844674407370955162ull));
-}
+inline std::uint64_t divide_by_pow10_1(std::uint64_t n) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 // floor(n / 1000) for the larger-divisor step (n bounded as above).
-inline std::uint64_t divide_by_pow10_3(std::uint64_t n) noexcept {
-  return umul128_upper64(n, std::uint64_t(4722366482869645214ull)) >> 8;
-}
+inline std::uint64_t divide_by_pow10_3(std::uint64_t n) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 // Returns whether n is divisible by 10^kappa (= 100) and divides n by it.
-inline bool check_divisibility_and_divide_by_pow10_kappa(std::uint64_t &n) noexcept {
-  // magic number for division by 100 (kappa == 2).
-  const std::uint32_t prod = std::uint32_t(n) * std::uint32_t(656);
-  const bool result = (prod & 0xffffu) < 656u;
-  n = std::uint64_t(prod >> 16);
-  return result;
-}
+inline bool check_divisibility_and_divide_by_pow10_kappa(std::uint64_t &n) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 // Strip trailing decimal zeros from significand, bumping exponent accordingly.
 // Branchless search; constants from the Dragonbox reference.
-inline void remove_trailing_zeros(std::uint64_t &significand, int &exponent) noexcept {
-  std::uint64_t r = rotr64(significand * std::uint64_t(28999941890838049ull), 8);
-  bool b = r < std::uint64_t(184467440738ull);
-  int s = b ? 1 : 0;
-  significand = b ? r : significand;
-
-  r = rotr64(significand * std::uint64_t(182622766329724561ull), 4);
-  b = r < std::uint64_t(1844674407370956ull);
-  s = s * 2 + (b ? 1 : 0);
-  significand = b ? r : significand;
-
-  r = rotr64(significand * std::uint64_t(10330176681277348905ull), 2);
-  b = r < std::uint64_t(184467440737095517ull);
-  s = s * 2 + (b ? 1 : 0);
-  significand = b ? r : significand;
-
-  r = rotr64(significand * std::uint64_t(14757395258967641293ull), 1);
-  b = r < std::uint64_t(1844674407370955162ull);
-  s = s * 2 + (b ? 1 : 0);
-  significand = b ? r : significand;
-
-  exponent += s;
-}
+inline void remove_trailing_zeros(std::uint64_t &significand, int &exponent) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 // Dragonbox core: shortest (significand, exponent) such that
 //   value == significand * 10^exponent
@@ -858,127 +750,7 @@ struct decimal_fp {
 };
 
 inline decimal_fp to_decimal(std::uint64_t binary_significand,
-                             int binary_exponent) noexcept {
-  const bool is_even = (binary_significand % 2 == 0);
-  std::uint64_t two_fc = binary_significand * 2;
-
-  // Is the input a normal number?
-  if (binary_exponent != 0) {
-    binary_exponent += exponent_bias - significand_bits;
-
-    // Shorter interval case; proceed like Schubfach.
-    if (two_fc == 0) {
-      const int minus_k =
-          floor_log10_pow2_minus_log10_4_over_3(binary_exponent);
-      const int beta = binary_exponent + floor_log2_pow10(-minus_k);
-      const uint128 c = cache[-minus_k - cache_min_k];
-
-      std::uint64_t xi =
-          compute_left_endpoint_for_shorter_interval_case(c, beta);
-      const std::uint64_t zi =
-          compute_right_endpoint_for_shorter_interval_case(c, beta);
-
-      // If the left endpoint is not an integer, increase it. (Both endpoints
-      // are always included since the significand is even.)
-      if (!(binary_exponent >=
-                case_shorter_interval_left_endpoint_lower_threshold &&
-            binary_exponent <=
-                case_shorter_interval_left_endpoint_upper_threshold)) {
-        ++xi;
-      }
-
-      // Try the bigger divisor.
-      std::uint64_t decimal_significand = divide_by_pow10_1(zi);
-      if (decimal_significand * 10 >= xi) {
-        int decimal_exponent = minus_k + 1;
-        remove_trailing_zeros(decimal_significand, decimal_exponent);
-        return {decimal_significand, decimal_exponent};
-      }
-
-      // Otherwise, compute the round-up of y.
-      decimal_significand =
-          compute_round_up_for_shorter_interval_case(c, beta);
-      // On a tie, choose the even one.
-      if ((decimal_significand % 2 != 0) &&
-          binary_exponent >= shorter_interval_tie_lower_threshold &&
-          binary_exponent <= shorter_interval_tie_upper_threshold) {
-        --decimal_significand;
-      } else if (decimal_significand < xi) {
-        ++decimal_significand;
-      }
-      return {decimal_significand, minus_k};
-    }
-
-    // Normal interval case.
-    two_fc |= (std::uint64_t(1) << (significand_bits + 1));
-  } else {
-    // Subnormal number: normal interval case.
-    binary_exponent = min_exponent - significand_bits;
-  }
-
-  // Step 1: Schubfach multiplier calculation.
-  const int minus_k = floor_log10_pow2(binary_exponent) - kappa;
-  const uint128 c = cache[-minus_k - cache_min_k];
-  const int beta = binary_exponent + floor_log2_pow10(-minus_k);
-
-  const std::uint64_t deltai = compute_delta(c, beta);
-  const compute_mul_result z_result =
-      compute_mul((two_fc | 1) << beta, c);
-
-  // Step 2: Try larger divisor; remove trailing zeros if necessary.
-  std::uint64_t decimal_significand = divide_by_pow10_3(z_result.integer_part);
-  std::uint64_t r =
-      z_result.integer_part - std::uint64_t(big_divisor) * decimal_significand;
-
-  do {
-    if (r < deltai) {
-      // Exclude the right endpoint if necessary.
-      if ((r | std::uint64_t(!z_result.is_integer) | std::uint64_t(is_even)) ==
-          0) {
-        --decimal_significand;
-        r = big_divisor;
-        break;
-      }
-    } else if (r > deltai) {
-      break;
-    } else {
-      // r == deltai; compare fractional parts.
-      const compute_mul_parity_result x_result =
-          compute_mul_parity(two_fc - 1, c, beta);
-      if (!(x_result.parity | (x_result.is_integer & is_even))) {
-        break;
-      }
-    }
-
-    int decimal_exponent = minus_k + kappa + 1;
-    remove_trailing_zeros(decimal_significand, decimal_exponent);
-    return {decimal_significand, decimal_exponent};
-  } while (false);
-
-  // Step 3: Find the significand with the smaller divisor.
-  decimal_significand *= 10;
-
-  std::uint64_t dist = r - (deltai / 2) + (small_divisor / 2);
-  const bool approx_y_parity = ((dist ^ (small_divisor / 2)) & 1) != 0;
-
-  const bool divisible_by_small_divisor =
-      check_divisibility_and_divide_by_pow10_kappa(dist);
-
-  decimal_significand += dist;
-
-  if (divisible_by_small_divisor) {
-    const compute_mul_parity_result y_result =
-        compute_mul_parity(two_fc, c, beta);
-    if (y_result.parity != approx_y_parity) {
-      --decimal_significand;
-    } else if ((decimal_significand % 2) != 0 && y_result.is_integer) {
-      // On a tie (y is an integer), choose the even one.
-      --decimal_significand;
-    }
-  }
-
-  return {decimal_significand, minus_k + kappa};
-}
+                             int binary_exponent) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 /*!
 Fills buf with the shortest decimal digits of 'value' (which must be finite,
@@ -987,81 +759,14 @@ so that value == (buf, interpreted as an integer) * 10^decimal_exponent.
 This mirrors the contract of the previous grisu2() entry point.
 */
 inline void dragonbox(char *buf, int &len, int &decimal_exponent,
-                      double value) {
-  std::uint64_t bits;
-  std::memcpy(&bits, &value, sizeof(bits));
-  const std::uint64_t binary_significand =
-      bits & ((std::uint64_t(1) << significand_bits) - 1);
-  const int binary_exponent =
-      int((bits >> significand_bits) & 0x7ff);
-
-  const decimal_fp dec = to_decimal(binary_significand, binary_exponent);
-
-  // Convert the decimal significand to digits:
-  // 1) Proceed 2 digits at a time (s % 100) via a 00..99 lookup table
-  //     (see Alexandrescu, "Three Optimization Tips for C++", 2012),
-  // 2) Digits come out least-significant first, writing them back-to-front
-  //     with p = tmp + sizeof(tmp); to avoid reversal pass
-  // 3) Proceed remaining digits after loop to avoid branchs inside it
-  // 4) memcpy digits to char* buf (inside function input)
-  static const char digits2[201] =
-      "0001020304050607080910111213141516171819"
-      "2021222324252627282930313233343536373839"
-      "4041424344454647484950515253545556575859"
-      "6061626364656667686970717273747576777879"
-      "8081828384858687888990919293949596979899";
-  char tmp[24];
-  char *p = tmp + sizeof(tmp); // write backward
-  std::uint64_t s = dec.significand;
-  while (s >= 100) {
-    const std::uint32_t idx = static_cast<std::uint32_t>(s % 100) * 2;
-    s /= 100;
-    p -= 2;
-    p[0] = digits2[idx];
-    p[1] = digits2[idx + 1];
-  }
-  if (s >= 10) {
-    const std::uint32_t idx = static_cast<std::uint32_t>(s) * 2;
-    p -= 2;
-    p[0] = digits2[idx];
-    p[1] = digits2[idx + 1];
-  } else {
-    *--p = static_cast<char>('0' + s);
-  }
-  const int n = static_cast<int>(tmp + sizeof(tmp) - p);
-  std::memcpy(buf, p, static_cast<size_t>(n));
-  len = n;
-  decimal_exponent = dec.exponent;
-}
+                      double value) { __builtin_trap() /* STUB: not implemented */; }
 
 /*!
 @brief appends a decimal representation of e to buf
 @return a pointer to the element following the exponent.
 @pre -1000 < e < 1000
 */
-inline char *append_exponent(char *buf, int e) {
-
-  bool isNegative = e < 0;
-  e = isNegative ? -e : e;
-  *buf++ = isNegative  ? '-' : '+';
-
-  auto k = static_cast<std::uint32_t>(e);
-  if (k < 100) {
-    // Always print at least two digits in the exponent.
-    // This is for compatibility with printf("%g").
-    *buf++ = static_cast<char>('0' + k / 10);
-    k %= 10;
-    *buf++ = static_cast<char>('0' + k);
-  } else {
-    *buf++ = static_cast<char>('0' + k / 100);
-    k %= 100;
-    *buf++ = static_cast<char>('0' + k / 10);
-    k %= 10;
-    *buf++ = static_cast<char>('0' + k);
-  }
-
-  return buf;
-}
+inline char *append_exponent(char *buf, int e) { __builtin_trap() /* STUB: not implemented */; }
 
 /*!
 @brief prettify v = buf * 10^decimal_exponent
@@ -1071,64 +776,7 @@ notation. Otherwise it will be printed in exponential notation.
 @pre max_exp > 0
 */
 inline char *format_buffer(char *buf, int len, int decimal_exponent,
-                           int min_exp, int max_exp) {
-
-  const int k = len;
-  const int n = len + decimal_exponent;
-
-  // v = buf * 10^(n-k)
-  // k is the length of the buffer (number of decimal digits)
-  // n is the position of the decimal point relative to the start of the buffer.
-
-  if (k <= n && n <= max_exp) {
-    // digits[000]
-    // len <= max_exp + 2
-
-    std::memset(buf + k, '0', static_cast<size_t>(n) - static_cast<size_t>(k));
-    // Make it look like a floating-point number (#362, #378)
-    buf[n + 0] = '.';
-    buf[n + 1] = '0';
-    return buf + (static_cast<size_t>(n)) + 2;
-  }
-
-  if (0 < n && n <= max_exp) {
-    // dig.its
-    // len <= max_digits10 + 1
-    std::memmove(buf + (static_cast<size_t>(n) + 1), buf + n,
-                 static_cast<size_t>(k) - static_cast<size_t>(n));
-    buf[n] = '.';
-    return buf + (static_cast<size_t>(k) + 1U);
-  }
-
-  if (min_exp < n && n <= 0) {
-    // 0.[000]digits
-    // len <= 2 + (-min_exp - 1) + max_digits10
-
-    std::memmove(buf + (2 + static_cast<size_t>(-n)), buf,
-                 static_cast<size_t>(k));
-    buf[0] = '0';
-    buf[1] = '.';
-    std::memset(buf + 2, '0', static_cast<size_t>(-n));
-    return buf + (2U + static_cast<size_t>(-n) + static_cast<size_t>(k));
-  }
-
-  if (k == 1) {
-    // dE+123
-    // len <= 1 + 5
-
-    buf += 1;
-  } else {
-    // d.igitsE+123
-    // len <= max_digits10 + 1 + 5
-
-    std::memmove(buf + 2, buf + 1, static_cast<size_t>(k) - 1);
-    buf[1] = '.';
-    buf += 1 + static_cast<size_t>(k);
-  }
-
-  *buf++ = 'e';
-  return append_exponent(buf, n - 1);
-}
+                           int min_exp, int max_exp) { __builtin_trap() /* STUB: not implemented */; }
 
 } // NS dtoa_impl
 
@@ -1139,36 +787,7 @@ format. Returns an iterator pointing past-the-end of the decimal representation.
 @note The buffer must be large enough.
 @note The result is NOT null-terminated.
 */
-char *to_chars(char *first, const char *last, double value) {
-  static_cast<void>(last); // maybe unused - fix warning
-  bool negative = std::signbit(value);
-  if (negative) {
-    value = -value;
-    *first++ = '-';
-  }
-
-  if (value == 0) // +-0
-  {
-    *first++ = '0';
-    // Make it look like a floating-point number (#362, #378)
-    *first++ = '.';
-    *first++ = '0';
-    return first;
-  }
-  // Compute v = buffer * 10^decimal_exponent.
-  // The decimal digits are stored in the buffer, which needs to be interpreted
-  // as an unsigned decimal integer.
-  // len is the length of the buffer, i.e. the number of decimal digits.
-  int len = 0;
-  int decimal_exponent = 0;
-  dtoa_impl::dragonbox(first, len, decimal_exponent, value);
-  // Format the buffer like printf("%.*g", prec, value)
-  constexpr int kMinExp = -4;
-  constexpr int kMaxExp = std::numeric_limits<double>::digits10;
-
-  return dtoa_impl::format_buffer(first, len, decimal_exponent, kMinExp,
-                                  kMaxExp);
-}
+char *to_chars(char *first, const char *last, double value) { __builtin_trap() /* STUB: not implemented */; }
 } // NS internal
 } // NS simdjson
 

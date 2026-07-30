@@ -10,111 +10,68 @@ namespace internal {
 // auto_parser method definitions
 template <typename parser_type>
 inline auto_parser<parser_type>::auto_parser(parser_type &&parser, ondemand::document &&doc) noexcept requires(!std::is_pointer_v<parser_type>)
-  : m_parser{std::move(parser)}, m_doc{std::move(doc)} {}
+  : m_parser{std::move(parser)}, m_doc{std::move(doc)} { __builtin_trap() /* STUB: not implemented */; }
 
 template <typename parser_type>
 inline auto_parser<parser_type>::auto_parser(parser_type &&parser, padded_string_view const str) noexcept requires(!std::is_pointer_v<parser_type>)
-  : m_parser{std::move(parser)}, m_doc{}, m_error{SUCCESS} {
-  m_error = m_parser.iterate(str).get(m_doc);
-}
+  : m_parser{std::move(parser)}, m_doc{}, m_error{SUCCESS} { __builtin_trap() /* STUB: not implemented */; }
 
 template <typename parser_type>
 inline auto_parser<parser_type>::auto_parser(std::remove_pointer_t<parser_type> &parser, ondemand::document &&doc) noexcept requires(std::is_pointer_v<parser_type>)
-  : m_parser{&parser}, m_doc{std::move(doc)} {}
+  : m_parser{&parser}, m_doc{std::move(doc)} { __builtin_trap() /* STUB: not implemented */; }
 
 template <typename parser_type>
 inline auto_parser<parser_type>::auto_parser(std::remove_pointer_t<parser_type> &parser, padded_string_view const str) noexcept requires(std::is_pointer_v<parser_type>)
-  : m_parser{&parser}, m_doc{}, m_error{SUCCESS} {
-  m_error = m_parser->iterate(str).get(m_doc);
-}
+  : m_parser{&parser}, m_doc{}, m_error{SUCCESS} { __builtin_trap() /* STUB: not implemented */; }
 
 template <typename parser_type>
 inline auto_parser<parser_type>::auto_parser(padded_string_view const str) noexcept requires(std::is_pointer_v<parser_type>)
-  : auto_parser{ondemand::parser::get_parser(), str} {}
+  : auto_parser{ondemand::parser::get_parser(), str} { __builtin_trap() /* STUB: not implemented */; }
 
 template <typename parser_type>
 inline auto_parser<parser_type>::auto_parser(parser_type parser, ondemand::document &&doc) noexcept requires(std::is_pointer_v<parser_type>)
-  : auto_parser{*parser, std::move(doc)} {}
+  : auto_parser{*parser, std::move(doc)} { __builtin_trap() /* STUB: not implemented */; }
 
 
 template <typename parser_type>
-inline std::remove_pointer_t<parser_type> &auto_parser<parser_type>::parser() noexcept {
-  if constexpr (std::is_pointer_v<parser_type>) {
-    return *m_parser;
-  } else {
-    return m_parser;
-  }
-}
+inline std::remove_pointer_t<parser_type> &auto_parser<parser_type>::parser() noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 template <typename parser_type>
 template <typename T>
-inline simdjson_result<T> auto_parser<parser_type>::result() noexcept(is_nothrow_gettable<T>) {
-  if (m_error != SUCCESS) {
-    return m_error;
-  }
-  return m_doc.get<T>();
-}
+inline simdjson_result<T> auto_parser<parser_type>::result() noexcept(is_nothrow_gettable<T>) { __builtin_trap() /* STUB: not implemented */; }
 
 template <typename parser_type>
 template <typename T>
-simdjson_warn_unused simdjson_inline error_code auto_parser<parser_type>::get(T &value) && noexcept(is_nothrow_gettable<T>) {
-  return result<T>().get(value);
-}
+simdjson_warn_unused simdjson_inline error_code auto_parser<parser_type>::get(T &value) && noexcept(is_nothrow_gettable<T>) { __builtin_trap() /* STUB: not implemented */; }
 
 template <typename parser_type>
-inline simdjson_result<ondemand::array> auto_parser<parser_type>::array() noexcept {
-  return result<ondemand::array>();
-}
+inline simdjson_result<ondemand::array> auto_parser<parser_type>::array() noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 template <typename parser_type>
-inline simdjson_result<ondemand::object> auto_parser<parser_type>::object() noexcept {
-  return result<ondemand::object>();
-}
+inline simdjson_result<ondemand::object> auto_parser<parser_type>::object() noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 template <typename parser_type>
-inline simdjson_result<ondemand::number> auto_parser<parser_type>::number() noexcept {
-  return result<ondemand::number>();
-}
+inline simdjson_result<ondemand::number> auto_parser<parser_type>::number() noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 #if SIMDJSON_EXCEPTIONS
 template <typename parser_type>
 template <typename T>
-inline auto_parser<parser_type>::operator T() noexcept(false) {
-  if (m_error != SUCCESS) {
-    throw simdjson_error(m_error);
-  }
-  return m_doc.get<T>();
-}
+inline auto_parser<parser_type>::operator T() noexcept(false) { __builtin_trap() /* STUB: not implemented */; }
 #endif // SIMDJSON_EXCEPTIONS
 
 template <typename parser_type>
 template <typename T>
-inline std::optional<T> auto_parser<parser_type>::optional() noexcept(is_nothrow_gettable<T>) {
-  if (m_error != SUCCESS) {
-    return std::nullopt;
-  }
-  T value;
-  if (m_doc.get<T>().get(value)) [[unlikely]] {
-    return std::nullopt;
-  }
-  return {std::move(value)};
-}
+inline std::optional<T> auto_parser<parser_type>::optional() noexcept(is_nothrow_gettable<T>) { __builtin_trap() /* STUB: not implemented */; }
 
 // to_adaptor method definitions
 template <typename T>
-inline T to_adaptor<T>::operator()(simdjson_result<ondemand::value> &val) const noexcept {
-  return val.get<T>();
-}
+inline T to_adaptor<T>::operator()(simdjson_result<ondemand::value> &val) const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 template <typename T>
-inline auto to_adaptor<T>::operator()(padded_string_view const str) const noexcept {
-  return auto_parser<ondemand::parser *>{str};
-}
+inline auto to_adaptor<T>::operator()(padded_string_view const str) const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 template <typename T>
-inline auto to_adaptor<T>::operator()(ondemand::parser &parser, padded_string_view const str) const noexcept {
-  return auto_parser<ondemand::parser *>{parser, str};
-}
+inline auto to_adaptor<T>::operator()(ondemand::parser &parser, padded_string_view const str) const noexcept { __builtin_trap() /* STUB: not implemented */; }
 } // namespace internal
 } // namespace convert
 } // namespace simdjson

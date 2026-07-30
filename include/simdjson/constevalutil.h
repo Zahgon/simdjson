@@ -28,57 +28,21 @@ constexpr static std::array<std::string_view, 32> control_chars = {
     "\\u0015", "\\u0016", "\\u0017", "\\u0018", "\\u0019", "\\u001a", "\\u001b",
     "\\u001c", "\\u001d", "\\u001e", "\\u001f"};
 // unoptimized, meant for compile-time execution
-consteval std::string consteval_to_quoted_escaped(std::string_view input) {
-  std::string out = "\"";
-  for (char c : input) {
-    if (json_quotable_character[uint8_t(c)]) {
-      if (c == '"') {
-        out.append("\\\"");
-      } else if (c == '\\') {
-        out.append("\\\\");
-      } else {
-        std::string_view v = control_chars[uint8_t(c)];
-        out.append(v);
-      }
-    } else {
-      out.push_back(c);
-    }
-  }
-  out.push_back('"');
-  return out;
-}
+consteval std::string consteval_to_quoted_escaped(std::string_view input) { return {}; }
 #endif  // SIMDJSON_CONSTEVAL
 
 
 #if SIMDJSON_SUPPORTS_CONCEPTS
 template <size_t N>
 struct fixed_string {
-    constexpr fixed_string(const char (&str)[N])  {
-        for (std::size_t i = 0; i < N; ++i) {
-            data[i] = str[i];
-        }
-    }
-    constexpr fixed_string(const unsigned char (&str)[N])  {
-        for (std::size_t i = 0; i < N; ++i) {
-            data[i] = static_cast<char>(str[i]);
-        }
-    }
+    constexpr fixed_string(const char (&str)[N])  { }
+    constexpr fixed_string(const unsigned char (&str)[N])  { }
     char data[N];
-    constexpr std::string_view view() const { return {data, N - 1}; }
-    constexpr size_t size() const { return N ; }
-    constexpr operator std::string_view() const { return view(); }
-    constexpr char operator[](std::size_t index) const { return data[index]; }
-    constexpr bool operator==(const fixed_string& other) const {
-        if (N != other.size()) {
-            return false;
-        }
-        for (std::size_t i = 0; i < N; ++i) {
-            if (data[i] != other.data[i]) {
-                return false;
-            }
-        }
-        return true;
-    }
+    constexpr std::string_view view() const { return {}; }
+    constexpr size_t size() const { return {}; }
+    constexpr operator std::string_view() const { return {}; }
+    constexpr char operator[](std::size_t index) const { return {}; }
+    constexpr bool operator==(const fixed_string& other) const { return {}; }
 };
 template <std::size_t N>
 fixed_string(const char (&)[N]) -> fixed_string<N>;

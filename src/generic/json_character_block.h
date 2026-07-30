@@ -12,9 +12,9 @@ namespace {
 struct json_character_block {
   static simdjson_inline json_character_block classify(const simd::simd8x64<uint8_t>& in);
 
-  simdjson_inline uint64_t whitespace() const noexcept { return _whitespace; }
-  simdjson_inline uint64_t op() const noexcept { return _op; }
-  simdjson_inline uint64_t scalar() const noexcept { return ~(op() | whitespace()); }
+  simdjson_inline uint64_t whitespace() const noexcept { __builtin_trap() /* STUB: not implemented */; }
+  simdjson_inline uint64_t op() const noexcept { __builtin_trap() /* STUB: not implemented */; }
+  simdjson_inline uint64_t scalar() const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
   uint64_t _whitespace;
   uint64_t _op;

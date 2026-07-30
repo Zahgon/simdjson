@@ -50,37 +50,27 @@ inline constexpr struct deserialize_tag {
   // Customization Point for array
   template <typename T>
     requires custom_deserializable<T, value_type>
-  simdjson_warn_unused constexpr /* error_code */ auto operator()(array_type &object, T& output) const noexcept(nothrow_custom_deserializable<T, value_type>) {
-    return tag_invoke(*this, object, output);
-  }
+  simdjson_warn_unused constexpr /* error_code */ auto operator()(array_type &object, T& output) const noexcept(nothrow_custom_deserializable<T, value_type>) { return {}; }
 
   // Customization Point for object
   template <typename T>
     requires custom_deserializable<T, value_type>
-  simdjson_warn_unused constexpr /* error_code */ auto operator()(object_type &object, T& output) const noexcept(nothrow_custom_deserializable<T, value_type>) {
-    return tag_invoke(*this, object, output);
-  }
+  simdjson_warn_unused constexpr /* error_code */ auto operator()(object_type &object, T& output) const noexcept(nothrow_custom_deserializable<T, value_type>) { return {}; }
 
   // Customization Point for value
   template <typename T>
     requires custom_deserializable<T, value_type>
-  simdjson_warn_unused constexpr /* error_code */ auto operator()(value_type &object, T& output) const noexcept(nothrow_custom_deserializable<T, value_type>) {
-    return tag_invoke(*this, object, output);
-  }
+  simdjson_warn_unused constexpr /* error_code */ auto operator()(value_type &object, T& output) const noexcept(nothrow_custom_deserializable<T, value_type>) { return {}; }
 
   // Customization Point for document
   template <typename T>
     requires custom_deserializable<T, document_type>
-  simdjson_warn_unused constexpr /* error_code */ auto operator()(document_type &object, T& output) const noexcept(nothrow_custom_deserializable<T, document_type>) {
-    return tag_invoke(*this, object, output);
-  }
+  simdjson_warn_unused constexpr /* error_code */ auto operator()(document_type &object, T& output) const noexcept(nothrow_custom_deserializable<T, document_type>) { return {}; }
 
   // Customization Point for document reference
   template <typename T>
     requires custom_deserializable<T, document_reference_type>
-  simdjson_warn_unused constexpr /* error_code */ auto operator()(document_reference_type &object, T& output) const noexcept(nothrow_custom_deserializable<T, document_reference_type>) {
-    return tag_invoke(*this, object, output);
-  }
+  simdjson_warn_unused constexpr /* error_code */ auto operator()(document_reference_type &object, T& output) const noexcept(nothrow_custom_deserializable<T, document_reference_type>) { return {}; }
 
 
 } deserialize{};

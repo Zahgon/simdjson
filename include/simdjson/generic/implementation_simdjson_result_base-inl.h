@@ -14,94 +14,55 @@ namespace SIMDJSON_IMPLEMENTATION {
 //
 
 template<typename T>
-simdjson_inline void implementation_simdjson_result_base<T>::tie(T &value, error_code &error) && noexcept {
-  error = this->second;
-  if (!error) {
-    value = std::forward<implementation_simdjson_result_base<T>>(*this).first;
-  }
-}
+simdjson_inline void implementation_simdjson_result_base<T>::tie(T &value, error_code &error) && noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 template<typename T>
-simdjson_warn_unused simdjson_inline error_code implementation_simdjson_result_base<T>::get(T &value) && noexcept {
-  error_code error;
-  std::forward<implementation_simdjson_result_base<T>>(*this).tie(value, error);
-  return error;
-}
+simdjson_warn_unused simdjson_inline error_code implementation_simdjson_result_base<T>::get(T &value) && noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 template<typename T>
-simdjson_warn_unused simdjson_inline error_code implementation_simdjson_result_base<T>::error() const noexcept {
-  return this->second;
-}
+simdjson_warn_unused simdjson_inline error_code implementation_simdjson_result_base<T>::error() const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 
 template<typename T>
-simdjson_warn_unused simdjson_inline bool implementation_simdjson_result_base<T>::has_value() const noexcept {
-  return this->error() == SUCCESS;
-}
+simdjson_warn_unused simdjson_inline bool implementation_simdjson_result_base<T>::has_value() const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 #if SIMDJSON_EXCEPTIONS
 
 template<typename T>
-simdjson_inline T& implementation_simdjson_result_base<T>::operator*() &  noexcept(false) {
-  return this->value();
-}
+simdjson_inline T& implementation_simdjson_result_base<T>::operator*() &  noexcept(false) { __builtin_trap() /* STUB: not implemented */; }
 
 template<typename T>
-simdjson_inline T&& implementation_simdjson_result_base<T>::operator*() &&  noexcept(false) {
-  return std::forward<implementation_simdjson_result_base<T>>(*this).value();
-}
+simdjson_inline T&& implementation_simdjson_result_base<T>::operator*() &&  noexcept(false) { __builtin_trap() /* STUB: not implemented */; }
 
 template<typename T>
-simdjson_inline T* implementation_simdjson_result_base<T>::operator->() noexcept(false) {
-  if (this->error()) { throw simdjson_error(this->error()); }
-  return &this->first;
-}
+simdjson_inline T* implementation_simdjson_result_base<T>::operator->() noexcept(false) { __builtin_trap() /* STUB: not implemented */; }
 
 
 template<typename T>
-simdjson_inline const T* implementation_simdjson_result_base<T>::operator->() const noexcept(false) {
-  if (this->error()) { throw simdjson_error(this->error()); }
-  return &this->first;
-}
+simdjson_inline const T* implementation_simdjson_result_base<T>::operator->() const noexcept(false) { __builtin_trap() /* STUB: not implemented */; }
 
 template<typename T>
-simdjson_inline T& implementation_simdjson_result_base<T>::value() & noexcept(false) {
-  if (error()) { throw simdjson_error(error()); }
-  return this->first;
-}
+simdjson_inline T& implementation_simdjson_result_base<T>::value() & noexcept(false) { __builtin_trap() /* STUB: not implemented */; }
 
 template<typename T>
-simdjson_inline T&& implementation_simdjson_result_base<T>::value() && noexcept(false) {
-  return std::forward<implementation_simdjson_result_base<T>>(*this).take_value();
-}
+simdjson_inline T&& implementation_simdjson_result_base<T>::value() && noexcept(false) { __builtin_trap() /* STUB: not implemented */; }
 
 template<typename T>
-simdjson_inline T&& implementation_simdjson_result_base<T>::take_value() && noexcept(false) {
-  if (error()) { throw simdjson_error(error()); }
-  return std::forward<T>(this->first);
-}
+simdjson_inline T&& implementation_simdjson_result_base<T>::take_value() && noexcept(false) { __builtin_trap() /* STUB: not implemented */; }
 
 template<typename T>
-simdjson_inline implementation_simdjson_result_base<T>::operator T&&() && noexcept(false) {
-  return std::forward<implementation_simdjson_result_base<T>>(*this).take_value();
-}
+simdjson_inline implementation_simdjson_result_base<T>::operator T&&() && noexcept(false) { __builtin_trap() /* STUB: not implemented */; }
 
 #endif // SIMDJSON_EXCEPTIONS
 
 template<typename T>
-simdjson_inline const T& implementation_simdjson_result_base<T>::value_unsafe() const& noexcept {
-  return this->first;
-}
+simdjson_inline const T& implementation_simdjson_result_base<T>::value_unsafe() const& noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 template<typename T>
-simdjson_inline T& implementation_simdjson_result_base<T>::value_unsafe() & noexcept {
-  return this->first;
-}
+simdjson_inline T& implementation_simdjson_result_base<T>::value_unsafe() & noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 template<typename T>
-simdjson_inline T&& implementation_simdjson_result_base<T>::value_unsafe() && noexcept {
-  return std::forward<T>(this->first);
-}
+simdjson_inline T&& implementation_simdjson_result_base<T>::value_unsafe() && noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 template<typename T>
 simdjson_inline implementation_simdjson_result_base<T>::implementation_simdjson_result_base(T &&value, error_code error) noexcept
@@ -111,7 +72,7 @@ simdjson_inline implementation_simdjson_result_base<T>::implementation_simdjson_
     : implementation_simdjson_result_base(T{}, error) {}
 template<typename T>
 simdjson_inline implementation_simdjson_result_base<T>::implementation_simdjson_result_base(T &&value) noexcept
-    : implementation_simdjson_result_base(std::forward<T>(value), SUCCESS) {}
+    : implementation_simdjson_result_base(std::forward<T>(value), SUCCESS) { __builtin_trap() /* STUB: not implemented */; }
 
 } // namespace SIMDJSON_IMPLEMENTATION
 } // namespace simdjson

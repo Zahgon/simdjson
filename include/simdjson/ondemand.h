@@ -23,15 +23,7 @@ namespace simdjson {
              !std::same_as<T, builtin::ondemand::value> &&
              !std::same_as<T, builtin::ondemand::object> &&
              !std::same_as<T, builtin::ondemand::array>)
-  inline std::string to_json_string(const T& obj) {
-    builder::string_builder str_builder;
-    append(str_builder, obj);
-    std::string_view view;
-    if (str_builder.view().get(view) == SUCCESS) {
-      return std::string(view);
-    }
-    return "";
-  }
+  inline std::string to_json_string(const T& obj) { __builtin_trap() /* STUB: not implemented */; }
 #endif
 
 } // namespace simdjson

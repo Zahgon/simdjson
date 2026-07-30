@@ -91,7 +91,7 @@ struct padded_string final {
    * The string data.
    **/
   const char *data() const noexcept;
-  const uint8_t *u8data() const noexcept { return static_cast<const uint8_t*>(static_cast<const void*>(data_ptr));}
+  const uint8_t *u8data() const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
   /**
    * The string data.
@@ -262,7 +262,7 @@ private:
  * @param s The padded_string instance.
  * @throw if there is an error with the underlying output stream. simdjson itself will not throw.
  */
-inline std::ostream& operator<<(std::ostream& out, const padded_string& s) { return out << s.data(); }
+inline std::ostream& operator<<(std::ostream& out, const padded_string& s) { __builtin_trap() /* STUB: not implemented */; }
 
 #if SIMDJSON_EXCEPTIONS
 /**
@@ -274,7 +274,7 @@ inline std::ostream& operator<<(std::ostream& out, const padded_string& s) { ret
  *        underlying output stream, that error will be propagated (simdjson_error will not be
  *        thrown).
  */
-inline std::ostream& operator<<(std::ostream& out, simdjson_result<padded_string> &s) noexcept(false) { return out << s.value(); }
+inline std::ostream& operator<<(std::ostream& out, simdjson_result<padded_string> &s) noexcept(false) { __builtin_trap() /* STUB: not implemented */; }
 #endif
 
 #if SIMDJSON_HAS_PADDED_MEMORY_MAP

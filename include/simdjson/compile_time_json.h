@@ -67,9 +67,7 @@ template <constevalutil::fixed_string json_str> consteval auto parse_json();
 inline namespace literals {
 
 template <simdjson::constevalutil::fixed_string str>
-consteval auto operator ""_json() {
-  return simdjson::compile_time::parse_json<str>();
-}
+consteval auto operator ""_json() { return {}; }
 
 } // namespace literals
 } // namespace simdjson

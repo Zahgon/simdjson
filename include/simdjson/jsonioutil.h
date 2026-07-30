@@ -11,9 +11,7 @@ namespace simdjson {
 #if SIMDJSON_EXCEPTIONS
 #ifndef SIMDJSON_DISABLE_DEPRECATED_API
 [[deprecated("Use padded_string::load() instead")]]
-inline padded_string get_corpus(const char *path) {
-  return padded_string::load(path);
-}
+inline padded_string get_corpus(const char *path) { __builtin_trap() /* STUB: not implemented */; }
 #endif // SIMDJSON_DISABLE_DEPRECATED_API
 #endif // SIMDJSON_EXCEPTIONS
 

@@ -15,173 +15,40 @@ namespace ondemand {
 
 simdjson_inline raw_json_string::raw_json_string(const uint8_t * _buf) noexcept : buf{_buf} {}
 
-simdjson_inline const char * raw_json_string::raw() const noexcept {
-  return reinterpret_cast<const char *>(buf);
-}
+simdjson_inline const char * raw_json_string::raw() const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline char raw_json_string::operator[](size_t i) const noexcept {
-  return reinterpret_cast<const char *>(buf)[i];
-}
+simdjson_inline char raw_json_string::operator[](size_t i) const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline bool raw_json_string::is_free_from_unescaped_quote(std::string_view target) noexcept {
-  size_t pos{0};
-  while(pos < target.size()) {
-    pos = target.find('"', pos);
-    if(pos == std::string_view::npos) { return true; }
-    if(pos != 0 && target[pos-1] != '\\') { return false; }
-    if(pos > 1 && target[pos-2] == '\\') {
-      size_t backslash_count{2};
-      for(size_t i = 3; i <= pos; i++) {
-        if(target[pos-i] == '\\') { backslash_count++; }
-        else { break; }
-      }
-      if(backslash_count % 2 == 0) { return false; }
-    }
-    pos++;
-  }
-  return true;
-}
+simdjson_inline bool raw_json_string::is_free_from_unescaped_quote(std::string_view target) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline bool raw_json_string::is_free_from_unescaped_quote(const char* target) noexcept {
-  size_t pos{0};
-  while(target[pos]) {
-    const char * result = strchr(target+pos, '"');
-    if(result == nullptr) { return true; }
-    pos = result - target;
-    if(pos != 0 && target[pos-1] != '\\') { return false; }
-    if(pos > 1 && target[pos-2] == '\\') {
-      size_t backslash_count{2};
-      for(size_t i = 3; i <= pos; i++) {
-        if(target[pos-i] == '\\') { backslash_count++; }
-        else { break; }
-      }
-      if(backslash_count % 2 == 0) { return false; }
-    }
-    pos++;
-  }
-  return true;
-}
+simdjson_inline bool raw_json_string::is_free_from_unescaped_quote(const char* target) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 
-simdjson_inline bool raw_json_string::unsafe_is_equal(size_t length, std::string_view target) const noexcept {
-  // If we are going to call memcmp, then we must know something about the length of the raw_json_string.
-  return (length >= target.size()) && (raw()[target.size()] == '"') && !memcmp(raw(), target.data(), target.size());
-}
+simdjson_inline bool raw_json_string::unsafe_is_equal(size_t length, std::string_view target) const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline bool raw_json_string::unsafe_is_equal(std::string_view target) const noexcept {
-  // Assumptions: does not contain unescaped quote characters("), and
-  // the raw content is quote terminated within a valid JSON string.
-  if(target.size() <= SIMDJSON_PADDING) {
-    return (raw()[target.size()] == '"') && !memcmp(raw(), target.data(), target.size());
-  }
-  const char * r{raw()};
-  size_t pos{0};
-  for(;pos < target.size();pos++) {
-    if(r[pos] != target[pos]) { return false; }
-  }
-  if(r[pos] != '"') { return false; }
-  return true;
-}
+simdjson_inline bool raw_json_string::unsafe_is_equal(std::string_view target) const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline bool raw_json_string::is_equal(std::string_view target) const noexcept {
-  const char * r{raw()};
-  size_t pos{0};
-  bool escaping{false};
-  for(;pos < target.size();pos++) {
-    if(r[pos] != target[pos]) { return false; }
-    // if target is a compile-time constant and it is free from
-    // quotes, then the next part could get optimized away through
-    // inlining.
-    if((target[pos] == '"') && !escaping) {
-      // We have reached the end of the raw_json_string but
-      // the target is not done.
-      return false;
-    } else if(target[pos] == '\\') {
-      escaping = !escaping;
-    } else {
-      escaping = false;
-    }
-  }
-  if(r[pos] != '"') { return false; }
-  return true;
-}
+simdjson_inline bool raw_json_string::is_equal(std::string_view target) const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 
-simdjson_inline bool raw_json_string::unsafe_is_equal(const char * target) const noexcept {
-  // Assumptions: 'target' does not contain unescaped quote characters, is null terminated and
-  // the raw content is quote terminated within a valid JSON string.
-  const char * r{raw()};
-  size_t pos{0};
-  for(;target[pos];pos++) {
-    if(r[pos] != target[pos]) { return false; }
-  }
-  if(r[pos] != '"') { return false; }
-  return true;
-}
+simdjson_inline bool raw_json_string::unsafe_is_equal(const char * target) const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline bool raw_json_string::is_equal(const char* target) const noexcept {
-  // Assumptions: does not contain unescaped quote characters, and
-  // the raw content is quote terminated within a valid JSON string.
-  const char * r{raw()};
-  size_t pos{0};
-  bool escaping{false};
-  for(;target[pos];pos++) {
-    if(r[pos] != target[pos]) { return false; }
-    // if target is a compile-time constant and it is free from
-    // quotes, then the next part could get optimized away through
-    // inlining.
-    if((target[pos] == '"') && !escaping) {
-      // We have reached the end of the raw_json_string but
-      // the target is not done.
-      return false;
-    } else if(target[pos] == '\\') {
-      escaping = !escaping;
-    } else {
-      escaping = false;
-    }
-  }
-  if(r[pos] != '"') { return false; }
-  return true;
-}
+simdjson_inline bool raw_json_string::is_equal(const char* target) const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_unused simdjson_inline bool operator==(const raw_json_string &a, std::string_view c) noexcept {
-  return a.unsafe_is_equal(c);
-}
+simdjson_unused simdjson_inline bool operator==(const raw_json_string &a, std::string_view c) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_unused simdjson_inline bool operator==(std::string_view c, const raw_json_string &a) noexcept {
-  return a == c;
-}
+simdjson_unused simdjson_inline bool operator==(std::string_view c, const raw_json_string &a) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_unused simdjson_inline bool operator!=(const raw_json_string &a, std::string_view c) noexcept {
-  return !(a == c);
-}
+simdjson_unused simdjson_inline bool operator!=(const raw_json_string &a, std::string_view c) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_unused simdjson_inline bool operator!=(std::string_view c, const raw_json_string &a) noexcept {
-  return !(a == c);
-}
+simdjson_unused simdjson_inline bool operator!=(std::string_view c, const raw_json_string &a) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 
-simdjson_inline simdjson_warn_unused simdjson_result<std::string_view> raw_json_string::unescape(json_iterator &iter, bool allow_replacement) const noexcept {
-  return iter.unescape(*this, allow_replacement);
-}
+simdjson_inline simdjson_warn_unused simdjson_result<std::string_view> raw_json_string::unescape(json_iterator &iter, bool allow_replacement) const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline simdjson_warn_unused simdjson_result<std::string_view> raw_json_string::unescape_wobbly(json_iterator &iter) const noexcept {
-  return iter.unescape_wobbly(*this);
-}
+simdjson_inline simdjson_warn_unused simdjson_result<std::string_view> raw_json_string::unescape_wobbly(json_iterator &iter) const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_unused simdjson_inline std::ostream &operator<<(std::ostream &out, const raw_json_string &str) noexcept {
-  bool in_escape = false;
-  const char *s = str.raw();
-  while (true) {
-    switch (*s) {
-      case '\\': in_escape = !in_escape; break;
-      case '"': if (in_escape) { in_escape = false; } else { return out; } break;
-      default: if (in_escape) { in_escape = false; }
-    }
-    out << *s;
-    s++;
-  }
-}
+simdjson_unused simdjson_inline std::ostream &operator<<(std::ostream &out, const raw_json_string &str) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 } // namespace ondemand
 } // namespace SIMDJSON_IMPLEMENTATION
@@ -190,26 +57,14 @@ simdjson_unused simdjson_inline std::ostream &operator<<(std::ostream &out, cons
 namespace simdjson {
 
 simdjson_inline simdjson_result<SIMDJSON_IMPLEMENTATION::ondemand::raw_json_string>::simdjson_result(SIMDJSON_IMPLEMENTATION::ondemand::raw_json_string &&value) noexcept
-    : implementation_simdjson_result_base<SIMDJSON_IMPLEMENTATION::ondemand::raw_json_string>(std::forward<SIMDJSON_IMPLEMENTATION::ondemand::raw_json_string>(value)) {}
+    : implementation_simdjson_result_base<SIMDJSON_IMPLEMENTATION::ondemand::raw_json_string>(std::forward<SIMDJSON_IMPLEMENTATION::ondemand::raw_json_string>(value)) { __builtin_trap() /* STUB: not implemented */; }
 simdjson_inline simdjson_result<SIMDJSON_IMPLEMENTATION::ondemand::raw_json_string>::simdjson_result(error_code error) noexcept
-    : implementation_simdjson_result_base<SIMDJSON_IMPLEMENTATION::ondemand::raw_json_string>(error) {}
+    : implementation_simdjson_result_base<SIMDJSON_IMPLEMENTATION::ondemand::raw_json_string>(error) { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline simdjson_result<const char *> simdjson_result<SIMDJSON_IMPLEMENTATION::ondemand::raw_json_string>::raw() const noexcept {
-  if (error()) { return error(); }
-  return first.raw();
-}
-simdjson_inline char simdjson_result<SIMDJSON_IMPLEMENTATION::ondemand::raw_json_string>::operator[](size_t i) const noexcept {
-  if (error()) { return error(); }
-  return first[i];
-}
-simdjson_inline simdjson_warn_unused simdjson_result<std::string_view> simdjson_result<SIMDJSON_IMPLEMENTATION::ondemand::raw_json_string>::unescape(SIMDJSON_IMPLEMENTATION::ondemand::json_iterator &iter, bool allow_replacement) const noexcept {
-  if (error()) { return error(); }
-  return first.unescape(iter, allow_replacement);
-}
-simdjson_inline simdjson_warn_unused simdjson_result<std::string_view> simdjson_result<SIMDJSON_IMPLEMENTATION::ondemand::raw_json_string>::unescape_wobbly(SIMDJSON_IMPLEMENTATION::ondemand::json_iterator &iter) const noexcept {
-  if (error()) { return error(); }
-  return first.unescape_wobbly(iter);
-}
+simdjson_inline simdjson_result<const char *> simdjson_result<SIMDJSON_IMPLEMENTATION::ondemand::raw_json_string>::raw() const noexcept { __builtin_trap() /* STUB: not implemented */; }
+simdjson_inline char simdjson_result<SIMDJSON_IMPLEMENTATION::ondemand::raw_json_string>::operator[](size_t i) const noexcept { __builtin_trap() /* STUB: not implemented */; }
+simdjson_inline simdjson_warn_unused simdjson_result<std::string_view> simdjson_result<SIMDJSON_IMPLEMENTATION::ondemand::raw_json_string>::unescape(SIMDJSON_IMPLEMENTATION::ondemand::json_iterator &iter, bool allow_replacement) const noexcept { __builtin_trap() /* STUB: not implemented */; }
+simdjson_inline simdjson_warn_unused simdjson_result<std::string_view> simdjson_result<SIMDJSON_IMPLEMENTATION::ondemand::raw_json_string>::unescape_wobbly(SIMDJSON_IMPLEMENTATION::ondemand::json_iterator &iter) const noexcept { __builtin_trap() /* STUB: not implemented */; }
 } // namespace simdjson
 
 #endif // SIMDJSON_GENERIC_ONDEMAND_RAW_JSON_STRING_INL_H

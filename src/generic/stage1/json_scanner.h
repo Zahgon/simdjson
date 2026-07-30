@@ -41,16 +41,16 @@ public:
    * The start of structurals.
    * In simdjson prior to v0.3, these were called the pseudo-structural characters.
    **/
-  simdjson_inline uint64_t structural_start() const noexcept { return potential_structural_start() & ~_string.string_tail(); }
+  simdjson_inline uint64_t structural_start() const noexcept { __builtin_trap() /* STUB: not implemented */; }
   /** All JSON whitespace (i.e. not in a string) */
-  simdjson_inline uint64_t whitespace() const noexcept { return non_quote_outside_string(_characters.whitespace()); }
+  simdjson_inline uint64_t whitespace() const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
   // Helpers
 
   /** Whether the given characters are inside a string (only works on non-quotes) */
-  simdjson_inline uint64_t non_quote_inside_string(uint64_t mask) const noexcept { return _string.non_quote_inside_string(mask); }
+  simdjson_inline uint64_t non_quote_inside_string(uint64_t mask) const noexcept { __builtin_trap() /* STUB: not implemented */; }
   /** Whether the given characters are outside a string (only works on non-quotes) */
-  simdjson_inline uint64_t non_quote_outside_string(uint64_t mask) const noexcept { return _string.non_quote_outside_string(mask); }
+  simdjson_inline uint64_t non_quote_outside_string(uint64_t mask) const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
   // string and escape characters
   json_string_block _string;
@@ -65,29 +65,17 @@ private:
    * structural elements ([,],{,},:, comma) plus scalar starts like 123, true and "abc".
    * They may reside inside a string.
    **/
-  simdjson_inline uint64_t potential_structural_start() const noexcept { return _characters.op() | potential_scalar_start(); }
+  simdjson_inline uint64_t potential_structural_start() const noexcept { __builtin_trap() /* STUB: not implemented */; }
   /**
    * The start of non-operator runs, like 123, true and "abc".
    * It main reside inside a string.
    **/
-  simdjson_inline uint64_t potential_scalar_start() const noexcept {
-    // The term "scalar" refers to anything except structural characters and white space
-    // (so letters, numbers, quotes).
-    // Whenever it is preceded by something that is not a structural element ({,},[,],:, ") nor a white-space
-    // then we know that it is irrelevant structurally.
-    return _characters.scalar() & ~follows_potential_scalar();
-  }
+  simdjson_inline uint64_t potential_scalar_start() const noexcept { __builtin_trap() /* STUB: not implemented */; }
   /**
    * Whether the given character is immediately after a non-operator like 123, true.
    * The characters following a quote are not included.
    */
-  simdjson_inline uint64_t follows_potential_scalar() const noexcept {
-    // _follows_potential_nonquote_scalar: is defined as marking any character that follows a character
-    // that is not a structural element ({,},[,],:, comma) nor a quote (") and that is not a
-    // white space.
-    // It is understood that within quoted region, anything at all could be marked (irrelevant).
-    return _follows_potential_nonquote_scalar;
-  }
+  simdjson_inline uint64_t follows_potential_scalar() const noexcept { __builtin_trap() /* STUB: not implemented */; }
 };
 
 /**
@@ -125,40 +113,11 @@ private:
 //
 //     const uint64_t backslashed_quote = in.eq('"') & immediately_follows(in.eq('\'), prev_backslash);
 //
-simdjson_inline uint64_t follows(const uint64_t match, uint64_t &overflow) {
-  const uint64_t result = match << 1 | overflow;
-  overflow = match >> 63;
-  return result;
-}
+simdjson_inline uint64_t follows(const uint64_t match, uint64_t &overflow) { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline json_block json_scanner::next(const simd::simd8x64<uint8_t>& in) {
-  json_string_block strings = string_scanner.next(in);
-  // identifies the white-space and the structural characters
-  json_character_block characters = json_character_block::classify(in);
-  // The term "scalar" refers to anything except structural characters and white space
-  // (so letters, numbers, quotes).
-  // We want follows_scalar to mark anything that follows a non-quote scalar (so letters and numbers).
-  //
-  // A terminal quote should either be followed by a structural character (comma, brace, bracket, colon)
-  // or nothing. However, we still want ' "a string"true ' to mark the 't' of 'true' as a potential
-  // pseudo-structural character just like we would if we had  ' "a string" true '; otherwise we
-  // may need to add an extra check when parsing strings.
-  //
-  // Performance: there are many ways to skin this cat.
-  const uint64_t nonquote_scalar = characters.scalar() & ~strings.quote();
-  uint64_t follows_nonquote_scalar = follows(nonquote_scalar, prev_scalar);
-  // We are returning a function-local object so either we get a move constructor
-  // or we get copy elision.
-  return json_block(
-    strings,// strings is a function-local object so either it moves or the copy is elided.
-    characters,
-    follows_nonquote_scalar
-  );
-}
+simdjson_inline json_block json_scanner::next(const simd::simd8x64<uint8_t>& in) { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_warn_unused simdjson_inline error_code json_scanner::finish() {
-  return string_scanner.finish();
-}
+simdjson_warn_unused simdjson_inline error_code json_scanner::finish() { __builtin_trap() /* STUB: not implemented */; }
 
 } // namespace stage1
 } // unnamed namespace

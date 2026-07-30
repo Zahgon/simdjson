@@ -10,16 +10,16 @@ namespace internal {
 template<typename T>
 class atomic_ptr {
 public:
-  atomic_ptr(T *_ptr) : ptr{_ptr} {}
+  atomic_ptr(T *_ptr) : ptr{_ptr} { __builtin_trap() /* STUB: not implemented */; }
 
-  operator const T*() const { return ptr.load(); }
-  const T& operator*() const { return *ptr; }
-  const T* operator->() const { return ptr.load(); }
+  operator const T*() const { __builtin_trap() /* STUB: not implemented */; }
+  const T& operator*() const { __builtin_trap() /* STUB: not implemented */; }
+  const T* operator->() const { __builtin_trap() /* STUB: not implemented */; }
 
-  operator T*() { return ptr.load(); }
-  T& operator*() { return *ptr; }
-  T* operator->() { return ptr.load(); }
-  atomic_ptr& operator=(T *_ptr) { ptr = _ptr; return *this; }
+  operator T*() { __builtin_trap() /* STUB: not implemented */; }
+  T& operator*() { __builtin_trap() /* STUB: not implemented */; }
+  T* operator->() { __builtin_trap() /* STUB: not implemented */; }
+  atomic_ptr& operator=(T *_ptr) { __builtin_trap() /* STUB: not implemented */; }
 
 private:
   std::atomic<T*> ptr;

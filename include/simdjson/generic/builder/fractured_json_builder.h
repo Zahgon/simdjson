@@ -38,17 +38,7 @@ template <class T>
 simdjson_warn_unused simdjson_result<std::string> to_fractured_json_string(
     const T& obj,
     const fractured_json_options& opts = {},
-    size_t initial_capacity = string_builder::DEFAULT_INITIAL_CAPACITY) {
-  // Step 1: Serialize to minified JSON
-  std::string formatted;
-  auto error = to_json_string(obj, initial_capacity).get(formatted);
-  if (error) {
-    return error;
-  }
-
-  // Step 2: Reformat with FracturedJson
-  return fractured_json_string(formatted, opts);
-}
+    size_t initial_capacity = string_builder::DEFAULT_INITIAL_CAPACITY) { __builtin_trap() /* STUB: not implemented */; }
 
 /**
  * Extract specific fields from an object and format with FracturedJson.
@@ -69,17 +59,7 @@ template<constevalutil::fixed_string... FieldNames, typename T>
 simdjson_warn_unused simdjson_result<std::string> extract_fractured_json(
     const T& obj,
     const fractured_json_options& opts = {},
-    size_t initial_capacity = string_builder::DEFAULT_INITIAL_CAPACITY) {
-  // Step 1: Extract fields to minified JSON
-  std::string formatted;
-  auto error = extract_from<FieldNames...>(obj, initial_capacity).get(formatted);
-  if (error) {
-    return error;
-  }
-
-  // Step 2: Reformat with FracturedJson
-  return fractured_json_string(formatted, opts);
-}
+    size_t initial_capacity = string_builder::DEFAULT_INITIAL_CAPACITY) { __builtin_trap() /* STUB: not implemented */; }
 
 } // namespace builder
 } // namespace SIMDJSON_IMPLEMENTATION
@@ -94,9 +74,7 @@ template <class T>
 simdjson_warn_unused simdjson_result<std::string> to_fractured_json_string(
     const T& obj,
     const fractured_json_options& opts = {},
-    size_t initial_capacity = SIMDJSON_IMPLEMENTATION::builder::string_builder::DEFAULT_INITIAL_CAPACITY) {
-  return SIMDJSON_IMPLEMENTATION::builder::to_fractured_json_string(obj, opts, initial_capacity);
-}
+    size_t initial_capacity = SIMDJSON_IMPLEMENTATION::builder::string_builder::DEFAULT_INITIAL_CAPACITY) { __builtin_trap() /* STUB: not implemented */; }
 /**
  * Extract specific fields from an object and format with FracturedJson.
  * Global namespace version for convenience.
@@ -106,9 +84,7 @@ template<constevalutil::fixed_string... FieldNames, typename T>
 simdjson_warn_unused simdjson_result<std::string> extract_fractured_json(
     const T& obj,
     const fractured_json_options& opts = {},
-    size_t initial_capacity = SIMDJSON_IMPLEMENTATION::builder::string_builder::DEFAULT_INITIAL_CAPACITY) {
-  return SIMDJSON_IMPLEMENTATION::builder::extract_fractured_json<FieldNames...>(obj, opts, initial_capacity);
-}
+    size_t initial_capacity = SIMDJSON_IMPLEMENTATION::builder::string_builder::DEFAULT_INITIAL_CAPACITY) { __builtin_trap() /* STUB: not implemented */; }
 
 } // namespace simdjson
 

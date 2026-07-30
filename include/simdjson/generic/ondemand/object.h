@@ -39,7 +39,7 @@ namespace ondemand {
 struct [[nodiscard]] for_each_result {
   error_code error{SUCCESS};
   std::size_t matched_count{0};
-  constexpr operator error_code() const noexcept { return error; }
+  constexpr operator error_code() const noexcept { return {}; }
 };
 
 namespace key_selector_for_each_detail {
@@ -409,10 +409,7 @@ public:
    */
   template <typename T>
   simdjson_warn_unused simdjson_inline error_code get(T &out)
-     noexcept(custom_deserializable<T, object> ? nothrow_custom_deserializable<T, object> : true) {
-    static_assert(custom_deserializable<T, object>);
-    return deserialize(*this, out);
-  }
+     noexcept(custom_deserializable<T, object> ? nothrow_custom_deserializable<T, object> : true) { __builtin_trap() /* STUB: not implemented */; }
   /**
    * Get this array as the given type.
    *
@@ -422,12 +419,7 @@ public:
   template <typename T>
   simdjson_inline simdjson_result<T> get()
     noexcept(custom_deserializable<T, value> ? nothrow_custom_deserializable<T, value> : true)
-  {
-    static_assert(std::is_default_constructible<T>::value, "The specified type is not default constructible.");
-    T out{};
-    SIMDJSON_TRY(get<T>(out));
-    return out;
-  }
+  { __builtin_trap() /* STUB: not implemented */; }
 
 #if SIMDJSON_STATIC_REFLECTION
   /**
@@ -517,23 +509,9 @@ public:
   // TODO: move this code into object-inl.h
 
   template<typename T>
-  simdjson_inline simdjson_result<T> get() noexcept {
-    if (error()) { return error(); }
-    if constexpr (std::is_same_v<T, SIMDJSON_IMPLEMENTATION::ondemand::object>) {
-      return first;
-    }
-    return first.get<T>();
-  }
+  simdjson_inline simdjson_result<T> get() noexcept { __builtin_trap() /* STUB: not implemented */; }
   template<typename T>
-  simdjson_warn_unused simdjson_inline error_code get(T& out) noexcept {
-    if (error()) { return error(); }
-    if constexpr (std::is_same_v<T, SIMDJSON_IMPLEMENTATION::ondemand::object>) {
-      out = first;
-    } else {
-      SIMDJSON_TRY( first.get<T>(out) );
-    }
-    return SUCCESS;
-  }
+  simdjson_warn_unused simdjson_inline error_code get(T& out) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
   /**
    * Forwards to object::for_each on the underlying object, so error-code-style
@@ -572,10 +550,7 @@ public:
   // TODO: move this code into object-inl.h
   template<constevalutil::fixed_string... FieldNames, typename T>
     requires(std::is_class_v<T> && (sizeof...(FieldNames) > 0))
-  simdjson_warn_unused simdjson_inline error_code extract_into(T& out) noexcept {
-    if (error()) { return error(); }
-    return first.extract_into<FieldNames...>(out);
-  }
+  simdjson_warn_unused simdjson_inline error_code extract_into(T& out) noexcept { __builtin_trap() /* STUB: not implemented */; }
 #endif // SIMDJSON_STATIC_REFLECTION
 #endif // SIMDJSON_SUPPORTS_CONCEPTS
 };

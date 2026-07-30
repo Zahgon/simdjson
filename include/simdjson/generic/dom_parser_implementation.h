@@ -60,33 +60,9 @@ inline dom_parser_implementation::dom_parser_implementation(dom_parser_implement
 inline dom_parser_implementation &dom_parser_implementation::operator=(dom_parser_implementation &&other) noexcept = default;
 
 // Leaving these here so they can be inlined if so desired
-inline simdjson_warn_unused error_code dom_parser_implementation::set_capacity(size_t capacity) noexcept {
-  if(capacity > SIMDJSON_MAXSIZE_BYTES) { return CAPACITY; }
-  // Stage 1 index output
-  size_t rounded_capacity = SIMDJSON_ROUNDUP_N(capacity, 64);
-  if(rounded_capacity + 9 < rounded_capacity) {
-    return CAPACITY; // overflow, only happen on legacy 32-bit systems with very large capacity
-  }
-  size_t max_structures = rounded_capacity + 9;
-  structural_indexes.reset( new (std::nothrow) uint32_t[max_structures] );
-  if (!structural_indexes) { _capacity = 0; return MEMALLOC; }
-  structural_indexes[0] = 0;
-  n_structural_indexes = 0;
+inline simdjson_warn_unused error_code dom_parser_implementation::set_capacity(size_t capacity) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-  _capacity = capacity;
-  return SUCCESS;
-}
-
-inline simdjson_warn_unused error_code dom_parser_implementation::set_max_depth(size_t max_depth) noexcept {
-  if(max_depth > SIMDJSON_MAX_DEPTH) { return CAPACITY; }
-  // Stage 2 stacks
-  open_containers.reset(new (std::nothrow) open_container[max_depth]);
-  is_array.reset(new (std::nothrow) bool[max_depth]);
-  if (!is_array || !open_containers) { _max_depth = 0; return MEMALLOC; }
-
-  _max_depth = max_depth;
-  return SUCCESS;
-}
+inline simdjson_warn_unused error_code dom_parser_implementation::set_max_depth(size_t max_depth) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 } // namespace SIMDJSON_IMPLEMENTATION
 } // namespace simdjson

@@ -19,52 +19,31 @@ public:
   static constexpr uint32_t BYTES_PROCESSED = 32;
   simdjson_inline backslash_and_quote copy_and_find(const uint8_t *src, uint8_t *dst);
 
-  simdjson_inline bool has_quote_first() { return ((bs_bits - 1) & quote_bits) != 0; }
-  simdjson_inline bool has_backslash() { return ((quote_bits - 1) & bs_bits) != 0; }
-  simdjson_inline int quote_index() { return trailing_zeroes(quote_bits); }
-  simdjson_inline int backslash_index() { return trailing_zeroes(bs_bits); }
+  simdjson_inline bool has_quote_first() { __builtin_trap() /* STUB: not implemented */; }
+  simdjson_inline bool has_backslash() { __builtin_trap() /* STUB: not implemented */; }
+  simdjson_inline int quote_index() { __builtin_trap() /* STUB: not implemented */; }
+  simdjson_inline int backslash_index() { __builtin_trap() /* STUB: not implemented */; }
 
   uint32_t bs_bits;
   uint32_t quote_bits;
 }; // struct backslash_and_quote
 
-simdjson_inline backslash_and_quote backslash_and_quote::copy_and_find(const uint8_t *src, uint8_t *dst) {
-  // this can read up to 15 bytes beyond the buffer size, but we require
-  // SIMDJSON_PADDING of padding
-  static_assert(SIMDJSON_PADDING >= (BYTES_PROCESSED - 1), "backslash and quote finder must process fewer than SIMDJSON_PADDING bytes");
-  simd8<uint8_t> v(src);
-  // store to dest unconditionally - we can overwrite the bits we don't like later
-  v.store(dst);
-  return {
-      static_cast<uint32_t>((v == '\\').to_bitmask()),     // bs_bits
-      static_cast<uint32_t>((v == '"').to_bitmask()), // quote_bits
-  };
-}
+simdjson_inline backslash_and_quote backslash_and_quote::copy_and_find(const uint8_t *src, uint8_t *dst) { __builtin_trap() /* STUB: not implemented */; }
 
 
 struct escaping {
   static constexpr uint32_t BYTES_PROCESSED = 32;
   simdjson_inline static escaping copy_and_find(const uint8_t *src, uint8_t *dst);
 
-  simdjson_inline bool has_escape() { return escape_bits != 0; }
-  simdjson_inline int escape_index() { return trailing_zeroes(escape_bits); }
+  simdjson_inline bool has_escape() { __builtin_trap() /* STUB: not implemented */; }
+  simdjson_inline int escape_index() { __builtin_trap() /* STUB: not implemented */; }
 
   uint64_t escape_bits;
 }; // struct escaping
 
 
 
-simdjson_inline escaping escaping::copy_and_find(const uint8_t *src, uint8_t *dst) {
-  static_assert(SIMDJSON_PADDING >= (BYTES_PROCESSED - 1), "escaping finder must process fewer than SIMDJSON_PADDING bytes");
-  simd8<uint8_t> v(src);
-  v.store(dst);
-  simd8<bool> is_quote = (v == '"');
-  simd8<bool> is_backslash = (v == '\\');
-  simd8<bool> is_control = (v < 32);
-  return {
-    uint64_t((is_backslash | is_quote | is_control).to_bitmask())
-  };
-}
+simdjson_inline escaping escaping::copy_and_find(const uint8_t *src, uint8_t *dst) { __builtin_trap() /* STUB: not implemented */; }
 
 } // unnamed namespace
 } // namespace haswell

@@ -56,65 +56,34 @@ public:
   /** Prints characters in [begin, end) verbatim. **/
   simdjson_inline void chars(const char *begin, const char *end);
 
-  simdjson_inline void call_print_newline() {
-    static_cast<formatter *>(this)->print_newline();
-  }
+  simdjson_inline void call_print_newline() { __builtin_trap() /* STUB: not implemented */; }
 
-  simdjson_inline void call_print_indents(size_t depth) {
-    static_cast<formatter *>(this)->print_indents(depth);
-  }
+  simdjson_inline void call_print_indents(size_t depth) { __builtin_trap() /* STUB: not implemented */; }
 
-  simdjson_inline void call_print_space() {
-    static_cast<formatter *>(this)->print_space();
-  }
+  simdjson_inline void call_print_space() { __builtin_trap() /* STUB: not implemented */; }
 
 protected:
   // implementation details (subject to change)
   /** Backing buffer **/
   struct vector_with_small_buffer {
     vector_with_small_buffer() = default;
-    ~vector_with_small_buffer() { free_buffer(); }
+    ~vector_with_small_buffer() { __builtin_trap() /* STUB: not implemented */; }
 
     vector_with_small_buffer(const vector_with_small_buffer &) = delete;
     vector_with_small_buffer &
     operator=(const vector_with_small_buffer &) = delete;
 
-    void clear() {
-      size = 0;
-      capacity = StaticCapacity;
-      free_buffer();
-      buffer = array;
-    }
+    void clear() { __builtin_trap() /* STUB: not implemented */; }
 
-    simdjson_inline void push_back(char c) {
-      if (capacity < size + 1)
-        grow(capacity * 2);
-      buffer[size++] = c;
-    }
+    simdjson_inline void push_back(char c) { __builtin_trap() /* STUB: not implemented */; }
 
-    simdjson_inline void append(const char *begin, const char *end) {
-      const size_t new_size = size + (end - begin);
-      if (capacity < new_size)
-        // std::max(new_size, capacity * 2); is broken in tests on Windows
-        grow(new_size < capacity * 2 ? capacity * 2 : new_size);
-      std::copy(begin, end, buffer + size);
-      size = new_size;
-    }
+    simdjson_inline void append(const char *begin, const char *end) { __builtin_trap() /* STUB: not implemented */; }
 
-    std::string_view str() const { return std::string_view(buffer, size); }
+    std::string_view str() const { __builtin_trap() /* STUB: not implemented */; }
 
   private:
-    void free_buffer() {
-      if (buffer != array)
-        delete[] buffer;
-    }
-    void grow(size_t new_capacity) {
-      auto new_buffer = new char[new_capacity];
-      std::copy(buffer, buffer + size, new_buffer);
-      free_buffer();
-      buffer = new_buffer;
-      capacity = new_capacity;
-    }
+    void free_buffer() { __builtin_trap() /* STUB: not implemented */; }
+    void grow(size_t new_capacity) { __builtin_trap() /* STUB: not implemented */; }
 
     static const size_t StaticCapacity = 64;
     char array[StaticCapacity];
@@ -244,22 +213,9 @@ operator<<(std::ostream &out,
  *   cout << to_string(doc) << endl; // prints [1,2,3]
  *
  */
-template <class T> std::string to_string(T x) {
-  // in C++, to_string is standard:
-  // http://www.cplusplus.com/reference/string/to_string/ Currently minify and
-  // to_string are identical but in the future, they may differ.
-  simdjson::internal::string_builder<> sb;
-  sb.append(x);
-  std::string_view answer = sb.str();
-  return std::string(answer.data(), answer.size());
-}
+template <class T> std::string to_string(T x) { __builtin_trap() /* STUB: not implemented */; }
 #if SIMDJSON_EXCEPTIONS
-template <class T> std::string to_string(simdjson_result<T> x) {
-  if (x.error()) {
-    throw simdjson_error(x.error());
-  }
-  return to_string(x.value());
-}
+template <class T> std::string to_string(simdjson_result<T> x) { __builtin_trap() /* STUB: not implemented */; }
 #endif
 
 /**
@@ -271,15 +227,10 @@ template <class T> std::string to_string(simdjson_result<T> x) {
  *   cout << minify(doc) << endl; // prints [1,2,3]
  *
  */
-template <class T> std::string minify(T x) { return to_string(x); }
+template <class T> std::string minify(T x) { __builtin_trap() /* STUB: not implemented */; }
 
 #if SIMDJSON_EXCEPTIONS
-template <class T> std::string minify(simdjson_result<T> x) {
-  if (x.error()) {
-    throw simdjson_error(x.error());
-  }
-  return to_string(x.value());
-}
+template <class T> std::string minify(simdjson_result<T> x) { __builtin_trap() /* STUB: not implemented */; }
 #endif
 
 /**
@@ -300,20 +251,10 @@ template <class T> std::string minify(simdjson_result<T> x) {
  *   cout << prettify(doc) << endl;
  *
  */
-template <class T> std::string prettify(T x) {
-  simdjson::internal::string_builder<simdjson::internal::pretty_formatter> sb;
-  sb.append(x);
-  std::string_view answer = sb.str();
-  return std::string(answer.data(), answer.size());
-}
+template <class T> std::string prettify(T x) { __builtin_trap() /* STUB: not implemented */; }
 
 #if SIMDJSON_EXCEPTIONS
-template <class T> std::string prettify(simdjson_result<T> x) {
-  if (x.error()) {
-    throw simdjson_error(x.error());
-  }
-  return to_string(x.value());
-}
+template <class T> std::string prettify(simdjson_result<T> x) { __builtin_trap() /* STUB: not implemented */; }
 #endif
 
 } // namespace simdjson

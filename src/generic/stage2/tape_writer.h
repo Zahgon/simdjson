@@ -68,61 +68,27 @@ private:
   simdjson_inline void append2(uint64_t val, T val2, internal::tape_type t) noexcept;
 }; // struct tape_writer
 
-simdjson_inline void tape_writer::append_s64(int64_t value) noexcept {
-  append2(0, value, internal::tape_type::INT64);
-}
+simdjson_inline void tape_writer::append_s64(int64_t value) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline void tape_writer::append_u64(uint64_t value) noexcept {
-  append(0, internal::tape_type::UINT64);
-  *next_tape_loc = value;
-  next_tape_loc++;
-}
+simdjson_inline void tape_writer::append_u64(uint64_t value) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 /** Write a double value to tape. */
-simdjson_inline void tape_writer::append_double(double value) noexcept {
-  append2(0, value, internal::tape_type::DOUBLE);
-}
+simdjson_inline void tape_writer::append_double(double value) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline void tape_writer::skip() noexcept {
-  next_tape_loc++;
-}
+simdjson_inline void tape_writer::skip() noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline void tape_writer::skip_large_integer() noexcept {
-  next_tape_loc += 2;
-}
+simdjson_inline void tape_writer::skip_large_integer() noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline void tape_writer::skip_double() noexcept {
-  next_tape_loc += 2;
-}
+simdjson_inline void tape_writer::skip_double() noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline void tape_writer::append(uint64_t val, internal::tape_type t) noexcept {
-  *next_tape_loc = val | ((uint64_t(char(t))) << 56);
-  next_tape_loc++;
-}
+simdjson_inline void tape_writer::append(uint64_t val, internal::tape_type t) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 template<typename T>
-simdjson_inline void tape_writer::append2(uint64_t val, T val2, internal::tape_type t) noexcept {
-  append(val, t);
-  static_assert(sizeof(val2) == sizeof(*next_tape_loc), "Type is not 64 bits!");
-  memcpy(next_tape_loc, &val2, sizeof(val2));
-  next_tape_loc++;
-}
+simdjson_inline void tape_writer::append2(uint64_t val, T val2, internal::tape_type t) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline void tape_writer::write(uint64_t &tape_loc, uint64_t val, internal::tape_type t) noexcept {
-  tape_loc = val | ((uint64_t(char(t))) << 56);
-}
+simdjson_inline void tape_writer::write(uint64_t &tape_loc, uint64_t val, internal::tape_type t) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline void tape_writer::append_bigint(const uint8_t *src, size_t len, uint8_t *&string_buf) noexcept {
-  // Write to string buffer: [4-byte LE length][digits][null]
-  uint32_t str_len = uint32_t(len);
-  memcpy(string_buf, &str_len, sizeof(uint32_t));
-  memcpy(string_buf + sizeof(uint32_t), src, len);
-  string_buf[sizeof(uint32_t) + len] = 0;
-  // Tape entry: offset into string buffer
-  // The caller must set the offset relative to doc.string_buf base
-  append(0, internal::tape_type::BIGINT); // placeholder offset, caller patches
-  string_buf += sizeof(uint32_t) + len + 1;
-}
+simdjson_inline void tape_writer::append_bigint(const uint8_t *src, size_t len, uint8_t *&string_buf) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 } // namespace stage2
 } // unnamed namespace

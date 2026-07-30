@@ -23,39 +23,23 @@ namespace ondemand {
 simdjson_inline array_range_iterator::array_range_iterator(array_iterator iter) noexcept
   : iter_{iter} {}
 
-simdjson_inline simdjson_result<value> array_range_iterator::operator*() const noexcept {
-  return *iter_;
-}
+simdjson_inline simdjson_result<value> array_range_iterator::operator*() const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline array_range_iterator& array_range_iterator::operator++() noexcept {
-  ++iter_;
-  return *this;
-}
+simdjson_inline array_range_iterator& array_range_iterator::operator++() noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 SIMDJSON_PUSH_DISABLE_ALL_WARNINGS
-simdjson_inline void array_range_iterator::operator++(int) noexcept {
-  ++*this;
-}
+simdjson_inline void array_range_iterator::operator++(int) noexcept { __builtin_trap() /* STUB: not implemented */; }
 SIMDJSON_POP_DISABLE_WARNINGS
 
 //
 // array_range
 //
 
-simdjson_inline array_range::array_range(array& arr) noexcept {
-  auto b = arr.begin();
-  if (b.error()) { error_ = b.error(); return; }
-  begin_ = b.value_unsafe();
-  end_ = arr.end().value_unsafe();
-}
+simdjson_inline array_range::array_range(array& arr) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline array_range_iterator array_range::begin() noexcept {
-  return array_range_iterator(begin_);
-}
+simdjson_inline array_range_iterator array_range::begin() noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline array_range_iterator array_range::end() noexcept {
-  return array_range_iterator(end_);
-}
+simdjson_inline array_range_iterator array_range::end() noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 //
 // object_range_iterator
@@ -64,19 +48,12 @@ simdjson_inline array_range_iterator array_range::end() noexcept {
 simdjson_inline object_range_iterator::object_range_iterator(object_iterator iter) noexcept
   : iter_{iter} {}
 
-simdjson_inline simdjson_result<field> object_range_iterator::operator*() const noexcept {
-  return *iter_;
-}
+simdjson_inline simdjson_result<field> object_range_iterator::operator*() const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline object_range_iterator& object_range_iterator::operator++() noexcept {
-  ++iter_;
-  return *this;
-}
+simdjson_inline object_range_iterator& object_range_iterator::operator++() noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 SIMDJSON_PUSH_DISABLE_ALL_WARNINGS
-simdjson_inline void object_range_iterator::operator++(int) noexcept {
-  ++*this;
-}
+simdjson_inline void object_range_iterator::operator++(int) noexcept { __builtin_trap() /* STUB: not implemented */; }
 SIMDJSON_POP_DISABLE_WARNINGS
 
 
@@ -84,41 +61,24 @@ SIMDJSON_POP_DISABLE_WARNINGS
 // object_range
 //
 
-simdjson_inline object_range::object_range(object& obj) noexcept {
-  auto b = obj.begin();
-  if (b.error()) { error_ = b.error(); return; }
-  begin_ = b.value_unsafe();
-  end_ = obj.end().value_unsafe();
-}
+simdjson_inline object_range::object_range(object& obj) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline object_range_iterator object_range::begin() noexcept {
-  return object_range_iterator(begin_);
-}
+simdjson_inline object_range_iterator object_range::begin() noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline object_range_iterator object_range::end() noexcept {
-  return object_range_iterator(end_);
-}
+simdjson_inline object_range_iterator object_range::end() noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 //
 // Free functions
 //
 
-simdjson_inline array_range get_range(array& arr) noexcept {
-  return array_range(arr);
-}
+simdjson_inline array_range get_range(array& arr) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline object_range get_key_value_range(object& obj) noexcept {
-  return object_range(obj);
-}
+simdjson_inline object_range get_key_value_range(object& obj) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 #if SIMDJSON_EXCEPTIONS
-simdjson_inline array_range get_range(simdjson_result<array> result) {
-  return array_range(result.value());
-}
+simdjson_inline array_range get_range(simdjson_result<array> result) { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline object_range get_key_value_range(simdjson_result<object> result) {
-  return object_range(result.value());
-}
+simdjson_inline object_range get_key_value_range(simdjson_result<object> result) { __builtin_trap() /* STUB: not implemented */; }
 #endif // SIMDJSON_EXCEPTIONS
 
 } // namespace ondemand

@@ -14,15 +14,7 @@ namespace {
 //
 // For example, prefix_xor(00100100) == 00011100
 //
-simdjson_inline uint64_t prefix_xor(uint64_t bitmask) {
-  bitmask ^= bitmask << 1;
-  bitmask ^= bitmask << 2;
-  bitmask ^= bitmask << 4;
-  bitmask ^= bitmask << 8;
-  bitmask ^= bitmask << 16;
-  bitmask ^= bitmask << 32;
-  return bitmask;
-}
+simdjson_inline uint64_t prefix_xor(uint64_t bitmask) { __builtin_trap() /* STUB: not implemented */; }
 
 } // unnamed namespace
 } // namespace lasx

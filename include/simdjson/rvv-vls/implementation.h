@@ -18,7 +18,7 @@ public:
       "rvv_vls",
       "RISC-V V extension",
       internal::instruction_set::RVV_VLS
-  ) {}
+  ) { __builtin_trap() /* STUB: not implemented */; }
   simdjson_warn_unused error_code create_dom_parser_implementation(
     size_t capacity,
     size_t max_length,

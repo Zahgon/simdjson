@@ -15,13 +15,7 @@ namespace {
 //
 // For example, prefix_xor(00100100) == 00011100
 //
-simdjson_inline uint64_t prefix_xor(const uint64_t bitmask) {
-  // There should be no such thing with a processor supporting avx2
-  // but not clmul.
-  __m128i all_ones = _mm_set1_epi8('\xFF');
-  __m128i result = _mm_clmulepi64_si128(_mm_set_epi64x(0ULL, bitmask), all_ones, 0);
-  return _mm_cvtsi128_si64(result);
-}
+simdjson_inline uint64_t prefix_xor(const uint64_t bitmask) { __builtin_trap() /* STUB: not implemented */; }
 
 } // unnamed namespace
 } // namespace icelake

@@ -701,8 +701,8 @@ public:
    * When enabled, big integers (exceeding uint64 range) are stored as strings
    * in the tape instead of returning BIGINT_ERROR. Default: false.
    */
-  inline void number_as_string(bool enabled) noexcept { _number_as_string = enabled; }
-  inline bool number_as_string() const noexcept { return _number_as_string; }
+  inline void number_as_string(bool enabled) noexcept { __builtin_trap() /* STUB: not implemented */; }
+  inline bool number_as_string() const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 private:
   /**

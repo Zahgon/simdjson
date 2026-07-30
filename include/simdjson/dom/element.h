@@ -226,15 +226,7 @@ public:
    */
 
   template<typename T>
-  inline simdjson_result<T> get() const noexcept {
-    // Unless the simdjson library provides an inline implementation, calling this method should
-    // immediately fail.
-    static_assert(!sizeof(T), "The get method with given type is not implemented by the simdjson library. "
-      "The supported types are Boolean (bool), numbers (double, uint64_t, int64_t), "
-      "strings (std::string_view, const char *), arrays (dom::array) and objects (dom::object). "
-      "We recommend you use get_double(), get_bool(), get_uint64(), get_int64(), "
-      "get_object(), get_array() or get_string() instead of the get template.");
-  }
+  inline simdjson_result<T> get() const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
   /**
    * Get the value as the provided type (T).

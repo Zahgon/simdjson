@@ -18,59 +18,22 @@ SIMDJSON_NO_SANITIZE_UNDEFINED
 // initialized.
 // See issue https://github.com/simdjson/simdjson/issues/1965
 SIMDJSON_NO_SANITIZE_MEMORY
-simdjson_inline int trailing_zeroes(uint64_t input_num) {
-#if SIMDJSON_REGULAR_VISUAL_STUDIO
-  unsigned long ret;
-  // Search the mask data from least significant bit (LSB)
-  // to the most significant bit (MSB) for a set bit (1).
-  _BitScanForward64(&ret, input_num);
-  return (int)ret;
-#else // SIMDJSON_REGULAR_VISUAL_STUDIO
-  return __builtin_ctzll(input_num);
-#endif // SIMDJSON_REGULAR_VISUAL_STUDIO
-}
+simdjson_inline int trailing_zeroes(uint64_t input_num) { __builtin_trap() /* STUB: not implemented */; }
 
 /* result might be undefined when input_num is zero */
-simdjson_inline uint64_t clear_lowest_bit(uint64_t input_num) {
-  return input_num & (input_num-1);
-}
+simdjson_inline uint64_t clear_lowest_bit(uint64_t input_num) { __builtin_trap() /* STUB: not implemented */; }
 
 /* result might be undefined when input_num is zero */
-simdjson_inline int leading_zeroes(uint64_t input_num) {
-#if SIMDJSON_REGULAR_VISUAL_STUDIO
-  unsigned long leading_zero = 0;
-  // Search the mask data from most significant bit (MSB)
-  // to least significant bit (LSB) for a set bit (1).
-  if (_BitScanReverse64(&leading_zero, input_num))
-    return (int)(63 - leading_zero);
-  else
-    return 64;
-#else
-  return __builtin_clzll(input_num);
-#endif// SIMDJSON_REGULAR_VISUAL_STUDIO
-}
+simdjson_inline int leading_zeroes(uint64_t input_num) { __builtin_trap() /* STUB: not implemented */; }
 
 #if SIMDJSON_REGULAR_VISUAL_STUDIO
-simdjson_inline unsigned __int64 count_ones(uint64_t input_num) {
-  // note: we do not support legacy 32-bit Windows in this kernel
-  return __popcnt64(input_num);// Visual Studio wants two underscores
-}
+simdjson_inline unsigned __int64 count_ones(uint64_t input_num) { __builtin_trap() /* STUB: not implemented */; }
 #else
-simdjson_inline long long int count_ones(uint64_t input_num) {
-  return _popcnt64(input_num);
-}
+simdjson_inline long long int count_ones(uint64_t input_num) { __builtin_trap() /* STUB: not implemented */; }
 #endif
 
 simdjson_inline bool add_overflow(uint64_t value1, uint64_t value2,
-                                uint64_t *result) {
-#if SIMDJSON_REGULAR_VISUAL_STUDIO
-  return _addcarry_u64(0, value1, value2,
-                       reinterpret_cast<unsigned __int64 *>(result));
-#else
-  return __builtin_uaddll_overflow(value1, value2,
-                                   reinterpret_cast<unsigned long long *>(result));
-#endif
-}
+                                uint64_t *result) { __builtin_trap() /* STUB: not implemented */; }
 
 } // unnamed namespace
 } // namespace westmere

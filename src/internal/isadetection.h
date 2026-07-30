@@ -68,15 +68,11 @@ namespace internal {
 
 #if defined(__PPC64__)
 
-static inline uint32_t detect_supported_architectures() {
-  return instruction_set::ALTIVEC;
-}
+static inline uint32_t detect_supported_architectures() { __builtin_trap() /* STUB: not implemented */; }
 
 #elif defined(__aarch64__) || defined(_M_ARM64) || defined(_M_ARM64EC)
 
-static inline uint32_t detect_supported_architectures() {
-  return instruction_set::NEON;
-}
+static inline uint32_t detect_supported_architectures() { __builtin_trap() /* STUB: not implemented */; }
 
 #elif defined(__x86_64__) || defined(_M_AMD64) // x64
 
@@ -105,162 +101,25 @@ constexpr uint32_t cpuid_pclmulqdq_bit = 1 << 1;    ///< @private bit  1 of ECX 
 
 
 static inline void cpuid(uint32_t *eax, uint32_t *ebx, uint32_t *ecx,
-                         uint32_t *edx) {
-#if defined(_MSC_VER)
-  int cpu_info[4];
-  __cpuidex(cpu_info, *eax, *ecx);
-  *eax = cpu_info[0];
-  *ebx = cpu_info[1];
-  *ecx = cpu_info[2];
-  *edx = cpu_info[3];
-#elif (defined(HAVE_GCC_GET_CPUID) && defined(USE_GCC_GET_CPUID)) || defined(__FILC__)
-  uint32_t level = *eax;
-  __get_cpuid(level, eax, ebx, ecx, edx);
-#else
-  uint32_t a = *eax, b, c = *ecx, d;
-  asm volatile("cpuid\n\t" : "+a"(a), "=b"(b), "+c"(c), "=d"(d));
-  *eax = a;
-  *ebx = b;
-  *ecx = c;
-  *edx = d;
-#endif
-}
+                         uint32_t *edx) { __builtin_trap() /* STUB: not implemented */; }
 
 
-static inline uint64_t xgetbv() {
-#if defined(_MSC_VER)
-  return _xgetbv(0);
-#elif defined(__FILC__)
-  return zxgetbv();
-#else
-  uint32_t xcr0_lo, xcr0_hi;
-  asm volatile("xgetbv\n\t" : "=a" (xcr0_lo), "=d" (xcr0_hi) : "c" (0));
-  return xcr0_lo | (uint64_t(xcr0_hi) << 32);
-#endif
-}
+static inline uint64_t xgetbv() { __builtin_trap() /* STUB: not implemented */; }
 
-static inline uint32_t detect_supported_architectures() {
-  uint32_t eax, ebx, ecx, edx;
-  uint32_t host_isa = 0x0;
-
-  // EBX for EAX=0x1
-  eax = 0x1;
-  ecx = 0x0;
-  cpuid(&eax, &ebx, &ecx, &edx);
-
-  if (ecx & cpuid_sse42_bit) {
-    host_isa |= instruction_set::SSE42;
-  } else {
-    return host_isa; // everything after is redundant
-  }
-
-  if (ecx & cpuid_pclmulqdq_bit) {
-    host_isa |= instruction_set::PCLMULQDQ;
-  }
-
-
-  if ((ecx & cpuid_osxsave) != cpuid_osxsave) {
-    return host_isa;
-  }
-
-  // xgetbv for checking if the OS saves registers
-  uint64_t xcr0 = xgetbv();
-
-  if ((xcr0 & cpuid_avx256_saved) == 0) {
-    return host_isa;
-  }
-
-  // ECX for EAX=0x7
-  eax = 0x7;
-  ecx = 0x0;
-  cpuid(&eax, &ebx, &ecx, &edx);
-  if (ebx & cpuid_avx2_bit) {
-    host_isa |= instruction_set::AVX2;
-  }
-  if (ebx & cpuid_bmi1_bit) {
-    host_isa |= instruction_set::BMI1;
-  }
-
-  if (ebx & cpuid_bmi2_bit) {
-    host_isa |= instruction_set::BMI2;
-  }
-
-  if (!((xcr0 & cpuid_avx512_saved) == cpuid_avx512_saved)) {
-     return host_isa;
-  }
-
-  if (ebx & cpuid_avx512f_bit) {
-    host_isa |= instruction_set::AVX512F;
-  }
-
-  if (ebx & cpuid_avx512dq_bit) {
-    host_isa |= instruction_set::AVX512DQ;
-  }
-
-  if (ebx & cpuid_avx512ifma_bit) {
-    host_isa |= instruction_set::AVX512IFMA;
-  }
-
-  if (ebx & cpuid_avx512pf_bit) {
-    host_isa |= instruction_set::AVX512PF;
-  }
-
-  if (ebx & cpuid_avx512er_bit) {
-    host_isa |= instruction_set::AVX512ER;
-  }
-
-  if (ebx & cpuid_avx512cd_bit) {
-    host_isa |= instruction_set::AVX512CD;
-  }
-
-  if (ebx & cpuid_avx512bw_bit) {
-    host_isa |= instruction_set::AVX512BW;
-  }
-
-  if (ebx & cpuid_avx512vl_bit) {
-    host_isa |= instruction_set::AVX512VL;
-  }
-
-  if (ecx & cpuid_avx512vbmi2_bit) {
-    host_isa |= instruction_set::AVX512VBMI2;
-  }
-
-  return host_isa;
-}
+static inline uint32_t detect_supported_architectures() { __builtin_trap() /* STUB: not implemented */; }
 
 #elif defined(__loongarch__)
 
-static inline uint32_t detect_supported_architectures() {
-  uint32_t host_isa = instruction_set::DEFAULT;
-  #if defined(__linux__)
-  uint64_t hwcap = 0;
-  hwcap = getauxval(AT_HWCAP);
-  if (hwcap & HWCAP_LOONGARCH_LSX) {
-    host_isa |= instruction_set::LSX;
-  }
-  if (hwcap & HWCAP_LOONGARCH_LASX) {
-    host_isa |= instruction_set::LASX;
-  }
-  #endif
-  return host_isa;
-}
+static inline uint32_t detect_supported_architectures() { __builtin_trap() /* STUB: not implemented */; }
 
 #elif SIMDJSON_IS_RISCV64
 
-static inline uint32_t detect_supported_architectures() {
-  uint32_t host_isa = instruction_set::DEFAULT;
-#if SIMDJSON_IS_RVV_VLS
-  host_isa |= instruction_set::RVV_VLS;
-#endif
-  return host_isa;
-}
+static inline uint32_t detect_supported_architectures() { __builtin_trap() /* STUB: not implemented */; }
 
 #else // fallback
 
 
-static inline uint32_t detect_supported_architectures() {
-  return instruction_set::DEFAULT;
-}
+static inline uint32_t detect_supported_architectures() { __builtin_trap() /* STUB: not implemented */; }
 
 
 #endif // end SIMD extension detection code

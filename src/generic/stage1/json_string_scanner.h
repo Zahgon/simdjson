@@ -17,17 +17,17 @@ struct json_string_block {
   _escaped(escaped), _quote(quote), _in_string(in_string) {}
 
   // Escaped characters (characters following an escape() character)
-  simdjson_really_inline uint64_t escaped() const { return _escaped; }
+  simdjson_really_inline uint64_t escaped() const { __builtin_trap() /* STUB: not implemented */; }
   // Real (non-backslashed) quotes
-  simdjson_really_inline uint64_t quote() const { return _quote; }
+  simdjson_really_inline uint64_t quote() const { __builtin_trap() /* STUB: not implemented */; }
   // Only characters inside the string (not including the quotes)
-  simdjson_really_inline uint64_t string_content() const { return _in_string & ~_quote; }
+  simdjson_really_inline uint64_t string_content() const { __builtin_trap() /* STUB: not implemented */; }
   // Return a mask of whether the given characters are inside a string (only works on non-quotes)
-  simdjson_really_inline uint64_t non_quote_inside_string(uint64_t mask) const { return mask & _in_string; }
+  simdjson_really_inline uint64_t non_quote_inside_string(uint64_t mask) const { __builtin_trap() /* STUB: not implemented */; }
   // Return a mask of whether the given characters are inside a string (only works on non-quotes)
-  simdjson_really_inline uint64_t non_quote_outside_string(uint64_t mask) const { return mask & ~_in_string; }
+  simdjson_really_inline uint64_t non_quote_outside_string(uint64_t mask) const { __builtin_trap() /* STUB: not implemented */; }
   // Tail of string (everything except the start quote)
-  simdjson_really_inline uint64_t string_tail() const { return _in_string ^ _quote; }
+  simdjson_really_inline uint64_t string_tail() const { __builtin_trap() /* STUB: not implemented */; }
 
   // escaped characters (backslashed--does not include the hex characters after \u)
   uint64_t _escaped;
@@ -59,37 +59,9 @@ private:
 //
 // Backslash sequences outside of quotes will be detected in stage 2.
 //
-simdjson_really_inline json_string_block json_string_scanner::next(const simd::simd8x64<uint8_t>& in) {
-  const uint64_t backslash = in.eq('\\');
-  const uint64_t escaped = escape_scanner.next(backslash).escaped;
-  const uint64_t quote = in.eq('"') & ~escaped;
+simdjson_really_inline json_string_block json_string_scanner::next(const simd::simd8x64<uint8_t>& in) { __builtin_trap() /* STUB: not implemented */; }
 
-  //
-  // prefix_xor flips on bits inside the string (and flips off the end quote).
-  //
-  // Then we xor with prev_in_string: if we were in a string already, its effect is flipped
-  // (characters inside strings are outside, and characters outside strings are inside).
-  //
-  const uint64_t in_string = prefix_xor(quote) ^ prev_in_string;
-
-  //
-  // Check if we're still in a string at the end of the box so the next block will know
-  //
-  prev_in_string = uint64_t(static_cast<int64_t>(in_string) >> 63);
-
-  // Use ^ to turn the beginning quote off, and the end quote on.
-
-  // We are returning a function-local object so either we get a move constructor
-  // or we get copy elision.
-  return json_string_block(escaped, quote, in_string);
-}
-
-simdjson_really_inline error_code json_string_scanner::finish() {
-  if (prev_in_string) {
-    return UNCLOSED_STRING;
-  }
-  return SUCCESS;
-}
+simdjson_really_inline error_code json_string_scanner::finish() { __builtin_trap() /* STUB: not implemented */; }
 
 } // namespace stage1
 } // unnamed namespace

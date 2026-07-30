@@ -160,10 +160,7 @@ public:
    */
   template <typename T>
   simdjson_warn_unused simdjson_inline error_code get(T &out)
-     noexcept(custom_deserializable<T, array> ? nothrow_custom_deserializable<T, array> : true) {
-    static_assert(custom_deserializable<T, array>);
-    return deserialize(*this, out);
-  }
+     noexcept(custom_deserializable<T, array> ? nothrow_custom_deserializable<T, array> : true) { __builtin_trap() /* STUB: not implemented */; }
   /**
    * Get this array as the given type.
    *
@@ -173,12 +170,7 @@ public:
   template <typename T>
   simdjson_inline simdjson_result<T> get()
     noexcept(custom_deserializable<T, value> ? nothrow_custom_deserializable<T, value> : true)
-  {
-    static_assert(std::is_default_constructible<T>::value, "The specified type is not default constructible.");
-    T out{};
-    SIMDJSON_TRY(get<T>(out));
-    return out;
-  }
+  { __builtin_trap() /* STUB: not implemented */; }
 #endif // SIMDJSON_SUPPORTS_CONCEPTS
 protected:
   /**
@@ -269,23 +261,9 @@ public:
   // TODO: move this code into object-inl.h
 
   template<typename T>
-  simdjson_inline simdjson_result<T> get() noexcept {
-    if (error()) { return error(); }
-    if constexpr (std::is_same_v<T, SIMDJSON_IMPLEMENTATION::ondemand::array>) {
-      return first;
-    }
-    return first.get<T>();
-  }
+  simdjson_inline simdjson_result<T> get() noexcept { __builtin_trap() /* STUB: not implemented */; }
   template<typename T>
-  simdjson_warn_unused simdjson_inline error_code get(T& out) noexcept {
-    if (error()) { return error(); }
-    if constexpr (std::is_same_v<T, SIMDJSON_IMPLEMENTATION::ondemand::array>) {
-      out = first;
-    } else {
-      SIMDJSON_TRY( first.get<T>(out) );
-    }
-    return SUCCESS;
-  }
+  simdjson_warn_unused simdjson_inline error_code get(T& out) noexcept { __builtin_trap() /* STUB: not implemented */; }
 #endif // SIMDJSON_SUPPORTS_CONCEPTS
 };
 

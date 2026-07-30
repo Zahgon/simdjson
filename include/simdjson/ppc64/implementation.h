@@ -21,7 +21,7 @@ class implementation final : public simdjson::implementation {
 public:
   simdjson_inline implementation()
       : simdjson::implementation("ppc64", "PPC64 ALTIVEC",
-                                 internal::instruction_set::ALTIVEC) {}
+                                 internal::instruction_set::ALTIVEC) { __builtin_trap() /* STUB: not implemented */; }
 
   simdjson_warn_unused error_code create_dom_parser_implementation(
       size_t capacity, size_t max_length,

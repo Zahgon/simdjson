@@ -29,12 +29,7 @@ enum class stage1_mode {
 /**
  * Returns true if mode == streaming_partial or mode == streaming_final
  */
-inline bool is_streaming(stage1_mode mode) {
-  // performance note: it is probably faster to check that mode is different
-  // from regular than checking that it is either streaming_partial or streaming_final.
-  return (mode != stage1_mode::regular);
-  // return (mode == stage1_mode::streaming_partial || mode == stage1_mode::streaming_final);
-}
+inline bool is_streaming(stage1_mode mode) { __builtin_trap() /* STUB: not implemented */; }
 
 namespace internal {
 
@@ -245,26 +240,12 @@ simdjson_inline dom_parser_implementation::dom_parser_implementation() noexcept 
 simdjson_inline dom_parser_implementation::dom_parser_implementation(dom_parser_implementation &&other) noexcept = default;
 simdjson_inline dom_parser_implementation &dom_parser_implementation::operator=(dom_parser_implementation &&other) noexcept = default;
 
-simdjson_pure simdjson_inline size_t dom_parser_implementation::capacity() const noexcept {
-  return _capacity;
-}
+simdjson_pure simdjson_inline size_t dom_parser_implementation::capacity() const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_pure simdjson_inline size_t dom_parser_implementation::max_depth() const noexcept {
-  return _max_depth;
-}
+simdjson_pure simdjson_inline size_t dom_parser_implementation::max_depth() const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 simdjson_warn_unused
-inline error_code dom_parser_implementation::allocate(size_t capacity, size_t max_depth) noexcept {
-  if (this->max_depth() != max_depth) {
-    error_code err = set_max_depth(max_depth);
-    if (err) { return err; }
-  }
-  if (_capacity != capacity) {
-    error_code err = set_capacity(capacity);
-    if (err) { return err; }
-  }
-  return SUCCESS;
-}
+inline error_code dom_parser_implementation::allocate(size_t capacity, size_t max_depth) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 } // namespace internal
 } // namespace simdjson

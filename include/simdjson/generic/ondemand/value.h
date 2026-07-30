@@ -47,12 +47,7 @@ public:
 #else
     noexcept
 #endif
-  {
-    static_assert(std::is_default_constructible<T>::value, "The specified type is not default constructible.");
-    T out{};
-    SIMDJSON_TRY(get<T>(out));
-    return out;
-  }
+  { __builtin_trap() /* STUB: not implemented */; }
 
 
   /**
@@ -72,46 +67,7 @@ public:
 #else
     noexcept
 #endif
- {
-  #if SIMDJSON_SUPPORTS_CONCEPTS
-  if constexpr (custom_deserializable<T, value>) {
-      return deserialize(*this, out);
-  } else if constexpr (concepts::optional_type<T>) {
-      using value_type = typename std::remove_cvref_t<T>::value_type;
-
-      // Check if the value is null
-      bool is_null_value;
-      SIMDJSON_TRY( is_null().get(is_null_value) );
-      if (is_null_value) {
-        out.reset(); // Set to nullopt
-        return SUCCESS;
-      }
-
-      if (!out) {
-        out.emplace();
-      }
-      return get<value_type>(out.value());
-  } else {
-    static_assert(!sizeof(T), "The get<T> method with type T is not implemented by the simdjson library. "
-      "And you do not seem to have added support for it. Indeed, we have that "
-      "simdjson::custom_deserializable<T> is false and the type T is not a default type "
-      "such as ondemand::object, ondemand::array, raw_json_string, std::string_view, uint64_t, "
-      "int64_t, double, or bool.");
-    static_cast<void>(out); // to get rid of unused errors
-    return UNINITIALIZED;
-  }
-#else // SIMDJSON_SUPPORTS_CONCEPTS
-    // Unless the simdjson library or the user provides an inline implementation, calling this method should
-    // immediately fail.
-    static_assert(!sizeof(T), "The get method with given type is not implemented by the simdjson library. "
-      "The supported types are ondemand::object, ondemand::array, raw_json_string, std::string_view, uint64_t, "
-      "int64_t, double, and bool. We recommend you use get_double(), get_bool(), get_uint64(), get_int64(), "
-      " get_object(), get_array(), get_raw_json_string(), or get_string() instead of the get template."
-      " You may also add support for custom types, see our documentation.");
-    static_cast<void>(out); // to get rid of unused errors
-    return UNINITIALIZED;
-#endif
-  }
+ { __builtin_trap() /* STUB: not implemented */; }
 
   /**
    * Cast this JSON value to an array.

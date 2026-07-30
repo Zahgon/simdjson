@@ -15,7 +15,7 @@ namespace lsx {
  */
 class implementation final : public simdjson::implementation {
 public:
-  simdjson_inline implementation() : simdjson::implementation("lsx", "LoongArch SX", internal::instruction_set::LSX) {}
+  simdjson_inline implementation() : simdjson::implementation("lsx", "LoongArch SX", internal::instruction_set::LSX) { __builtin_trap() /* STUB: not implemented */; }
   simdjson_warn_unused error_code create_dom_parser_implementation(
     size_t capacity,
     size_t max_length,

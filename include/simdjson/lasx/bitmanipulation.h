@@ -19,29 +19,18 @@ SIMDJSON_NO_SANITIZE_UNDEFINED
 // initialized.
 // See issue https://github.com/simdjson/simdjson/issues/1965
 SIMDJSON_NO_SANITIZE_MEMORY
-simdjson_inline int trailing_zeroes(uint64_t input_num) {
-  return __builtin_ctzll(input_num);
-}
+simdjson_inline int trailing_zeroes(uint64_t input_num) { __builtin_trap() /* STUB: not implemented */; }
 
 /* result might be undefined when input_num is zero */
-simdjson_inline uint64_t clear_lowest_bit(uint64_t input_num) {
-  return input_num & (input_num-1);
-}
+simdjson_inline uint64_t clear_lowest_bit(uint64_t input_num) { __builtin_trap() /* STUB: not implemented */; }
 
 /* result might be undefined when input_num is zero */
-simdjson_inline int leading_zeroes(uint64_t input_num) {
-  return __builtin_clzll(input_num);
-}
+simdjson_inline int leading_zeroes(uint64_t input_num) { __builtin_trap() /* STUB: not implemented */; }
 
 /* result might be undefined when input_num is zero */
-simdjson_inline int count_ones(uint64_t input_num) {
-  return __lasx_xvpickve2gr_w(__lasx_xvpcnt_d(__m256i(v4u64{input_num, 0, 0, 0})), 0);
-}
+simdjson_inline int count_ones(uint64_t input_num) { __builtin_trap() /* STUB: not implemented */; }
 
-simdjson_inline bool add_overflow(uint64_t value1, uint64_t value2, uint64_t *result) {
-  return __builtin_uaddll_overflow(value1, value2,
-                                   reinterpret_cast<unsigned long long *>(result));
-}
+simdjson_inline bool add_overflow(uint64_t value1, uint64_t value2, uint64_t *result) { __builtin_trap() /* STUB: not implemented */; }
 
 } // unnamed namespace
 } // namespace lasx

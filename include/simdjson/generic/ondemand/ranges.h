@@ -52,9 +52,7 @@ SIMDJSON_POP_DISABLE_WARNINGS
    * whether the underlying parser has finished the array (depth-based).
    */
   simdjson_inline friend bool operator==(const array_range_iterator& a,
-                                         const array_range_iterator& b) noexcept {
-    return a.iter_ == b.iter_;
-  }
+                                         const array_range_iterator& b) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 private:
   mutable array_iterator iter_{};
@@ -86,7 +84,7 @@ public:
   simdjson_inline array_range_iterator end() noexcept;
 
   /** Returns SUCCESS if the range was created successfully, or the error code otherwise. */
-  simdjson_inline error_code error() const noexcept { return error_; }
+  simdjson_inline error_code error() const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 private:
   array_iterator begin_{};
@@ -116,9 +114,7 @@ SIMDJSON_PUSH_DISABLE_ALL_WARNINGS
   simdjson_inline void operator++(int) noexcept;
 SIMDJSON_POP_DISABLE_WARNINGS
   simdjson_inline friend bool operator==(const object_range_iterator& a,
-                                         const object_range_iterator& b) noexcept {
-    return a.iter_ == b.iter_;
-  }
+                                         const object_range_iterator& b) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 private:
   mutable object_iterator iter_{};
@@ -142,7 +138,7 @@ public:
   simdjson_inline object_range_iterator end() noexcept;
 
   /** Returns SUCCESS if the range was created successfully, or the error code otherwise. */
-  simdjson_inline error_code error() const noexcept { return error_; }
+  simdjson_inline error_code error() const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 private:
   object_iterator begin_{};

@@ -15,37 +15,30 @@ public:
   static constexpr uint32_t BYTES_PROCESSED = 1;
   simdjson_inline backslash_and_quote copy_and_find(const uint8_t *src, uint8_t *dst);
 
-  simdjson_inline bool has_quote_first() { return c == '"'; }
-  simdjson_inline bool has_backslash() { return c == '\\'; }
-  simdjson_inline int quote_index() { return c == '"' ? 0 : 1; }
-  simdjson_inline int backslash_index() { return c == '\\' ? 0 : 1; }
+  simdjson_inline bool has_quote_first() { __builtin_trap() /* STUB: not implemented */; }
+  simdjson_inline bool has_backslash() { __builtin_trap() /* STUB: not implemented */; }
+  simdjson_inline int quote_index() { __builtin_trap() /* STUB: not implemented */; }
+  simdjson_inline int backslash_index() { __builtin_trap() /* STUB: not implemented */; }
 
   uint8_t c;
 }; // struct backslash_and_quote
 
-simdjson_inline backslash_and_quote backslash_and_quote::copy_and_find(const uint8_t *src, uint8_t *dst) {
-  // store to dest unconditionally - we can overwrite the bits we don't like later
-  dst[0] = src[0];
-  return { src[0] };
-}
+simdjson_inline backslash_and_quote backslash_and_quote::copy_and_find(const uint8_t *src, uint8_t *dst) { __builtin_trap() /* STUB: not implemented */; }
 
 
 struct escaping {
   static constexpr uint32_t BYTES_PROCESSED = 1;
   simdjson_inline static escaping copy_and_find(const uint8_t *src, uint8_t *dst);
 
-  simdjson_inline bool has_escape() { return escape_bits; }
-  simdjson_inline int escape_index() { return 0; }
+  simdjson_inline bool has_escape() { __builtin_trap() /* STUB: not implemented */; }
+  simdjson_inline int escape_index() { __builtin_trap() /* STUB: not implemented */; }
 
   bool escape_bits;
 }; // struct escaping
 
 
 
-simdjson_inline escaping escaping::copy_and_find(const uint8_t *src, uint8_t *dst) {
-  dst[0] = src[0];
-  return { (src[0] == '\\') || (src[0] == '"') || (src[0] < 32) };
-}
+simdjson_inline escaping escaping::copy_and_find(const uint8_t *src, uint8_t *dst) { __builtin_trap() /* STUB: not implemented */; }
 
 } // unnamed namespace
 } // namespace fallback

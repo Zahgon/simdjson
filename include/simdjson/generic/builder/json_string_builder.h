@@ -20,9 +20,7 @@ struct has_custom_serialization : std::false_type {};
 
 inline constexpr struct serialize_tag {
   template <typename T>
-  constexpr void operator()(SIMDJSON_IMPLEMENTATION::builder::string_builder& b, T&& obj) const{
-    return tag_invoke(*this, b, std::forward<T>(obj));
-  }
+  constexpr void operator()(SIMDJSON_IMPLEMENTATION::builder::string_builder& b, T&& obj) const{ }
 
 
 } serialize{};
@@ -253,17 +251,14 @@ requires (!std::is_convertible<R, std::string_view>::value && !concepts::optiona
   // forces those reloads when accessed via members of *this). User
   // code should NOT call these directly.
   // ============================================================
-  simdjson_inline char *unsafe_data() noexcept { return buffer.get(); }
-  simdjson_inline size_t unsafe_position() const noexcept { return position; }
-  simdjson_inline size_t unsafe_capacity() const noexcept { return capacity; }
-  simdjson_inline void unsafe_set_position(size_t p) noexcept { position = p; }
+  simdjson_inline char *unsafe_data() noexcept { __builtin_trap() /* STUB: not implemented */; }
+  simdjson_inline size_t unsafe_position() const noexcept { __builtin_trap() /* STUB: not implemented */; }
+  simdjson_inline size_t unsafe_capacity() const noexcept { __builtin_trap() /* STUB: not implemented */; }
+  simdjson_inline void unsafe_set_position(size_t p) noexcept { __builtin_trap() /* STUB: not implemented */; }
   /// Make capacity available for at least `n` more bytes after the current
   /// position. Returns false if the allocation failed.
-  simdjson_inline bool unsafe_grow(size_t needed_total_capacity) noexcept {
-    grow_buffer(needed_total_capacity);
-    return is_valid;
-  }
-  simdjson_inline bool unsafe_is_valid() const noexcept { return is_valid; }
+  simdjson_inline bool unsafe_grow(size_t needed_total_capacity) noexcept { __builtin_trap() /* STUB: not implemented */; }
+  simdjson_inline bool unsafe_is_valid() const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 private:
   /**
@@ -300,24 +295,9 @@ private:
 #if !SIMDJSON_STATIC_REFLECTION
 // fallback implementation until we have static reflection
 template <class Z>
-simdjson_warn_unused simdjson_result<std::string> to_json(const Z &z, size_t initial_capacity = simdjson::SIMDJSON_IMPLEMENTATION::builder::string_builder::DEFAULT_INITIAL_CAPACITY) {
-  simdjson::SIMDJSON_IMPLEMENTATION::builder::string_builder b(initial_capacity);
-  b.append(z);
-  std::string_view s;
-  auto e = b.view().get(s);
-  if(e) { return e; }
-  return std::string(s);
-}
+simdjson_warn_unused simdjson_result<std::string> to_json(const Z &z, size_t initial_capacity = simdjson::SIMDJSON_IMPLEMENTATION::builder::string_builder::DEFAULT_INITIAL_CAPACITY) { __builtin_trap() /* STUB: not implemented */; }
 template <class Z>
-simdjson_warn_unused error_code to_json(const Z &z, std::string &s, size_t initial_capacity = simdjson::SIMDJSON_IMPLEMENTATION::builder::string_builder::DEFAULT_INITIAL_CAPACITY) {
-  simdjson::SIMDJSON_IMPLEMENTATION::builder::string_builder b(initial_capacity);
-  b.append(z);
-  std::string_view sv;
-  auto e = b.view().get(sv);
-  if(e) { return e; }
-  s.assign(sv.data(), sv.size());
-  return simdjson::SUCCESS;
-}
+simdjson_warn_unused error_code to_json(const Z &z, std::string &s, size_t initial_capacity = simdjson::SIMDJSON_IMPLEMENTATION::builder::string_builder::DEFAULT_INITIAL_CAPACITY) { __builtin_trap() /* STUB: not implemented */; }
 #endif
 
 #if SIMDJSON_SUPPORTS_CONCEPTS

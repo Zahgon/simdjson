@@ -61,28 +61,7 @@ concept appendable_containers =
 
 /// Insert into the container however possible
 template <appendable_containers T, typename... Args>
-constexpr decltype(auto) emplace_one(T &vec, Args &&...args) {
-  if constexpr (details::supports_emplace_back<T>) {
-    return vec.emplace_back(std::forward<Args>(args)...);
-  } else if constexpr (details::supports_emplace<T>) {
-    return vec.emplace(std::forward<Args>(args)...);
-  } else if constexpr (details::supports_push_back<T>) {
-    return vec.push_back(std::forward<Args>(args)...);
-  } else if constexpr (details::supports_push<T>) {
-    return vec.push(std::forward<Args>(args)...);
-  } else if constexpr (details::supports_add<T>) {
-    return vec.add(std::forward<Args>(args)...);
-  } else if constexpr (details::supports_append<T>) {
-    return vec.append(std::forward<Args>(args)...);
-  } else if constexpr (details::supports_insert<T>) {
-    return vec.insert(std::forward<Args>(args)...);
-  } else if constexpr (details::supports_op_append<T> && sizeof...(Args) == 1) {
-    return vec.operator+=(std::forward<Args>(args)...);
-  } else {
-    static_assert(!sizeof(T *),
-                  "We don't know how to add things to this container");
-  }
-}
+constexpr decltype(auto) emplace_one(T &vec, Args &&...args) { }
 
 /// This checks if the container will return a reference to the newly added
 /// element after an insert which for example `std::vector::emplace_back` does

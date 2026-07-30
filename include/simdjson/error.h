@@ -93,11 +93,11 @@ struct simdjson_error : public std::exception {
    * Create an exception from a simdjson error code.
    * @param error The error code
    */
-  simdjson_error(error_code error) noexcept : _error{error} { }
+  simdjson_error(error_code error) noexcept : _error{error} { __builtin_trap() /* STUB: not implemented */; }
   /** The error message */
-  const char *what() const noexcept override { return error_message(error()); }
+  const char *what() const noexcept override { __builtin_trap() /* STUB: not implemented */; }
   /** The error code */
-  error_code error() const noexcept { return _error; }
+  error_code error() const noexcept { __builtin_trap() /* STUB: not implemented */; }
 private:
   /** The error code that was used */
   error_code _error;
@@ -317,15 +317,7 @@ struct simdjson_result : public internal::simdjson_result_base<T> {
    * @param value The variable to assign the value to. May not be set if there is an error.
    */
   template <typename U = T>
-  simdjson_warn_unused simdjson_inline error_code get(std::string &value) && noexcept {
-    static_assert(std::is_same<U, std::string_view>::value, "SFINAE");
-    std::string_view v;
-    error_code error = std::forward<simdjson_result<T>>(*this).get(v);
-    if (!error) {
-      value.assign(v.data(), v.size());
-    }
-    return error;
-  }
+  simdjson_warn_unused simdjson_inline error_code get(std::string &value) && noexcept { __builtin_trap() /* STUB: not implemented */; }
 
   /**
    * The error.
@@ -385,7 +377,7 @@ struct simdjson_result : public internal::simdjson_result_base<T> {
 #if SIMDJSON_EXCEPTIONS
 
 template<typename T>
-inline std::ostream& operator<<(std::ostream& out, simdjson_result<T> value) { return out << value.value(); }
+inline std::ostream& operator<<(std::ostream& out, simdjson_result<T> value) { __builtin_trap() /* STUB: not implemented */; }
 #endif // SIMDJSON_EXCEPTIONS
 
 #ifndef SIMDJSON_DISABLE_DEPRECATED_API

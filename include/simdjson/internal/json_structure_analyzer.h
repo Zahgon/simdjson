@@ -70,7 +70,7 @@ struct element_metrics {
 class structure_analyzer {
 public:
   /** Default constructor */
-  structure_analyzer() : current_opts_(nullptr) {}
+  structure_analyzer() : current_opts_(nullptr) { __builtin_trap() /* STUB: not implemented */; }
 
   /** Copy constructor - deleted since class has pointer member */
   structure_analyzer(const structure_analyzer&) = delete;

@@ -22,9 +22,7 @@ simdjson_warn_unused bool validate_utf8(const char * buf, size_t len) noexcept;
  * @param sv the string_view to validate.
  * @return true if the string is valid UTF-8.
  */
-simdjson_inline simdjson_warn_unused bool validate_utf8(const std::string_view sv) noexcept {
-  return validate_utf8(sv.data(), sv.size());
-}
+simdjson_inline simdjson_warn_unused bool validate_utf8(const std::string_view sv) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 /**
  * Validate the UTF-8 string.
@@ -32,9 +30,7 @@ simdjson_inline simdjson_warn_unused bool validate_utf8(const std::string_view s
  * @param p the string to validate.
  * @return true if the string is valid UTF-8.
  */
-simdjson_inline simdjson_warn_unused bool validate_utf8(const std::string& s) noexcept {
-  return validate_utf8(s.data(), s.size());
-}
+simdjson_inline simdjson_warn_unused bool validate_utf8(const std::string& s) noexcept { __builtin_trap() /* STUB: not implemented */; }
 
 /**
  * An implementation of simdjson for a particular CPU architecture.
@@ -53,7 +49,7 @@ public:
    *
    * @return the name of the implementation, e.g. "haswell", "westmere", "arm64".
    */
-  virtual std::string name() const { return std::string(_name); }
+  virtual std::string name() const { __builtin_trap() /* STUB: not implemented */; }
 
   /**
    * The description of this implementation.
@@ -63,7 +59,7 @@ public:
    *
    * @return the description of the implementation, e.g. "Intel/AMD AVX2", "Intel/AMD SSE4.2", "ARM NEON".
    */
-  virtual std::string description() const { return std::string(_description); }
+  virtual std::string description() const { __builtin_trap() /* STUB: not implemented */; }
 
   /**
    * The instruction sets this implementation is compiled against
@@ -81,7 +77,7 @@ public:
    *
    * @return a mask of all required `internal::instruction_set::` values.
    */
-  virtual uint32_t required_instruction_sets() const { return _required_instruction_sets; }
+  virtual uint32_t required_instruction_sets() const { __builtin_trap() /* STUB: not implemented */; }
 
   /**
    * @private For internal implementation use
@@ -168,7 +164,7 @@ namespace internal {
 class available_implementation_list {
 public:
   /** Get the list of available implementations compiled into simdjson */
-  simdjson_inline available_implementation_list() {}
+  simdjson_inline available_implementation_list() { __builtin_trap() /* STUB: not implemented */; }
   /** Number of implementations */
   size_t size() const noexcept;
   /** STL const begin() iterator */
@@ -189,12 +185,7 @@ public:
    * @param name the implementation to find, e.g. "westmere", "haswell", "arm64"
    * @return the implementation, or nullptr if the parse failed.
    */
-  const implementation * operator[](const std::string_view &name) const noexcept {
-    for (const implementation * impl : *this) {
-      if (impl->name() == name) { return impl; }
-    }
-    return nullptr;
-  }
+  const implementation * operator[](const std::string_view &name) const noexcept { __builtin_trap() /* STUB: not implemented */; }
 
   /**
    * Detect the most advanced implementation supported by the current host.

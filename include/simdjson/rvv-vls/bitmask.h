@@ -15,21 +15,7 @@ namespace {
 //
 // For example, prefix_xor(00100100) == 00011100
 //
-simdjson_inline uint64_t prefix_xor(uint64_t bitmask) {
-#if __riscv_zbc
-  return __riscv_clmul_64(bitmask, ~(uint64_t)0);
-#elif __riscv_zvbc
-  return __riscv_vmv_x(__riscv_vclmul(__riscv_vmv_s_x_u64m1(bitmask, 1), ~(uint64_t)0, 1));
-#else
-  bitmask ^= bitmask << 1;
-  bitmask ^= bitmask << 2;
-  bitmask ^= bitmask << 4;
-  bitmask ^= bitmask << 8;
-  bitmask ^= bitmask << 16;
-  bitmask ^= bitmask << 32;
-#endif
-  return bitmask;
-}
+simdjson_inline uint64_t prefix_xor(uint64_t bitmask) { __builtin_trap() /* STUB: not implemented */; }
 
 } // unnamed namespace
 } // namespace rvv_vls
